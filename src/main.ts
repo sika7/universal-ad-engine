@@ -5,7 +5,7 @@ import { Core } from "./lib/core";
 // }
 
 const core = new Core();
-core.main();
+core.main([{ template: 'default' }]);
 
 
 // const elm = document.querySelector<HTMLButtonElement>('#app')!;

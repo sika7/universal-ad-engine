@@ -1,10 +1,12 @@
 import { Debugger } from "./debugger";
 import { Logger } from "./logger";
 
+type TypeUniversalAdTemplate = "default" | "iframe";
+
 interface Config {
-  template: string;
-  logger: Logger;
-  debugger: Debugger;
+  template: TypeUniversalAdTemplate;
+  logger?: Logger;
+  debugger?: Debugger;
 }
 
 class UniversalAdConfig {
@@ -36,7 +38,10 @@ export class Core {
     this.module = new UniversalAdModule();
   }
 
-  main() {
-
+  main(configs: Config[]) {
+    this.config.insertConfig(configs);
+    this.module.importModule();
   }
+
+  request() {}
 }
