@@ -1,8 +1,10 @@
+import { Debugger } from "./debugger";
 import { Logger } from "./logger";
 
 interface Config {
   template: string;
   logger: Logger;
+  debugger: Debugger;
 }
 
 class UniversalAdConfig {
