@@ -7,6 +7,10 @@ import { Core } from "./lib/core";
 const core = new Core();
 core.main();
 
+
+const elm = document.querySelector<HTMLButtonElement>('#app')!;
+
+console.log("elm", elm);
 class HelloWorld extends HTMLElement {
   connectedCallback() {
     // this.textContent = "";
@@ -22,6 +26,11 @@ class HelloWorld extends HTMLElement {
         background-color: #eee;
         border: 1px solid #666;
       }
-    </style>`;
+    </style>
+          <p>テスト</p>
+
+    `;
   }
 }
+
+customElements.define( 'hello-world', HelloWorld );

@@ -1,14 +1,5 @@
 export class Core {
+  constructor() {}
 
-  constructor() {
-
-  }
-
-  main() {
-
-  }
-
-
-
-
+  main() {}
 }
