@@ -1,5 +1,8 @@
+import { Logger } from "./logger";
+
 interface Config {
   template: string;
+  logger: Logger;
 }
 
 class UniversalAdConfig {
