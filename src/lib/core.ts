@@ -12,24 +12,58 @@ function getVariables(html: string) {
   return data?.map((data) => data.match(replacePattern)![1]);
 }
 
-function getProperty(object: object | undefined, propertyPath: string, defaultValue?: any) {
+function getProperty(
+  object: object | undefined,
+  propertyPath: string,
+  defaultValue?: any
+) {
   if (!object) return defaultValue;
 
   let result: any = object;
-  const propertyArray = propertyPath.split('.');
+  const propertyArray = propertyPath.split(".");
   for (let i = 0; i <= propertyArray.length - 1; i += 1) {
+    if (propertyArray[i] === "") return defaultValue;
 
-    if (propertyArray[i] === '') return defaultValue;
+    if (typeof result[propertyArray[i]] === "undefined") return defaultValue;
 
-    if (typeof result[propertyArray[i]] === 'undefined') return defaultValue;
+    if (typeof result[propertyArray[i]] === "object") {
+      result = result[propertyArray[i]];
+    }
 
-    result = result[propertyArray[i]];
+    if (typeof result[propertyArray[i]] === "function") {
+      result = result[propertyArray[i]];
+    }
+
+    if (typeof result[propertyArray[i]] === "string") {
+      result = result[propertyArray[i]];
+    }
+
+    if (typeof result[propertyArray[i]] === "number") {
+      result = result[propertyArray[i]];
+    }
+
+    if (typeof result[propertyArray[i]] === "boolean") {
+      result = result[propertyArray[i]];
+    }
   }
   return result;
 }
 
-function replaceVariable(html: string, variables: string[], test: Test) {
-  variables.map((data) => (html = html.replace("{{" + data + "}}", getProperty(test, data, ""))));
+function execValue(test: Test, propertyPath: string) {
+  const func = getProperty(test, propertyPath.replace(/\(\)/g, ""), () => {});
+  return func.call(test);
+}
+
+function replaceValue(test: Test, propertyPath: string) {
+  if (propertyPath.match(/.*\(\)/)) return execValue(test, propertyPath);
+  return getProperty(test, propertyPath, "");
+}
+
+function replaceData(html: string, variables: string[], test: Test) {
+  variables.map(
+    (data) =>
+      (html = html.replace("{{" + data + "}}", replaceValue(test, data)))
+  );
   return html;
 }
 
@@ -38,20 +72,24 @@ function applyHtmlVariable(test: Test) {
 
   const _html = variablesFormat(html);
   const values = getVariables(_html);
-  return replaceVariable(_html, values, test);
+  return replaceData(_html, values, test);
 }
 
 class Test {
   constructor() {}
 
-  name = 'huga';
+  name = "huga";
+
+  test() {
+    return "piyo";
+  }
 
   html() {
     return `
 <p>テスト</p>
 <p>{{ name }}</p>
 <p>テスト</p>
-<p>{{ name }}</p>
+<p>{{ test() }}</p>
 <p>{{ name }}</p>
     `;
   }
@@ -65,6 +103,14 @@ export class Core {
   constructor() {}
 
   main() {
+    // const test2 = {
+    //   hoge: { fuga: [1, 2, 3], fuga2: 'a' },
+    //   fuga: 9,
+    //   piyo: "1",
+    //   b: true,
+    // };
+    // console.log("test2", getProperty(test2, "b"));
+
     const test = new Test();
     console.log("test", applyHtmlVariable(test));
   }
