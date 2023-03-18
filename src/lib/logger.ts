@@ -1,4 +1,8 @@
-export class Logger {
+export interface UniversalAdLogger {
+
+}
+
+export class Logger implements UniversalAdLogger {
   constructor() {}
 
   debug() {}
