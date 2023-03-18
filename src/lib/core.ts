@@ -12,29 +12,61 @@ function getVariables(html: string) {
   return data?.map((data) => data.match(replacePattern)![1]);
 }
 
-function replaceVariable(html: string, variables: string[]) {
-  variables.map((data) => (html = html.replace("{{" + data + "}}", "hoge")));
+function getProperty(object: object | undefined, propertyPath: string, defaultValue?: any) {
+  if (!object) return defaultValue;
+
+  let result: any = object;
+  const propertyArray = propertyPath.split('.');
+  for (let i = 0; i <= propertyArray.length - 1; i += 1) {
+
+    if (propertyArray[i] === '') return defaultValue;
+
+    if (typeof result[propertyArray[i]] === 'undefined') return defaultValue;
+
+    result = result[propertyArray[i]];
+  }
+  return result;
+}
+
+function replaceVariable(html: string, variables: string[], test: Test) {
+  variables.map((data) => (html = html.replace("{{" + data + "}}", getProperty(test, data, ""))));
   return html;
 }
 
-function applyHtmlVariable(html: string) {
+function applyHtmlVariable(test: Test) {
+  const html = test.html();
+
   const _html = variablesFormat(html);
   const values = getVariables(_html);
-  return replaceVariable(_html, values);
+  return replaceVariable(_html, values, test);
 }
 
-export class Core {
+class Test {
   constructor() {}
 
-  main() {
-    const html = `
+  name = 'huga';
+
+  html() {
+    return `
 <p>テスト</p>
 <p>{{ name }}</p>
 <p>テスト</p>
 <p>{{ name }}</p>
 <p>{{ name }}</p>
     `;
-    console.log("test", applyHtmlVariable(html));
+  }
+
+  css() {
+    return "";
+  }
+}
+
+export class Core {
+  constructor() {}
+
+  main() {
+    const test = new Test();
+    console.log("test", applyHtmlVariable(test));
   }
 
   request() {}
