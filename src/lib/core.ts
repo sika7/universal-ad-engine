@@ -18,8 +18,9 @@ function replaceVariable(html: string, variables: string[]) {
 }
 
 function applyHtmlVariable(html: string) {
-  const values = getVariables(variablesFormat(html));
-  return replaceVariable(variablesFormat(html), values);
+  const _html = variablesFormat(html);
+  const values = getVariables(_html);
+  return replaceVariable(_html, values);
 }
 
 export class Core {
