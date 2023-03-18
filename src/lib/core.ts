@@ -1,47 +1,37 @@
-import { Debugger } from "./debugger";
-import { Logger } from "./logger";
-
-type TypeUniversalAdTemplate = "default" | "iframe";
-
-interface Config {
-  template: TypeUniversalAdTemplate;
-  logger?: Logger;
-  debugger?: Debugger;
-}
-
-class UniversalAdConfig {
-  config: Config[] = [];
-
-  constructor() {}
-
-  insertConfig(config: Config[]) {
-    this.config = config;
-  }
-
-  setConfig() {}
-}
-
-class UniversalAdModule {
-  constructor() {}
-
-  importModule() {}
-
-  appendModule() {}
-}
 
 export class Core {
-  config: UniversalAdConfig;
-  module: UniversalAdModule;
-
   constructor() {
-    this.config = new UniversalAdConfig();
-    this.module = new UniversalAdModule();
   }
 
-  main(configs: Config[]) {
-    this.config.insertConfig(configs);
-    this.module.importModule();
+  main() {
   }
 
   request() {}
 }
+
+
+// class HelloWorld extends HTMLElement {
+//   connectedCallback() {
+//     // this.textContent = "";
+// 
+//     const shadow = this.attachShadow({ mode: "closed" });
+//     shadow.innerHTML = `
+//     <style>
+//       p {
+//         text-align: center;
+//         font-weight: normal;
+//         padding: 1em;
+//         margin: 0 0 2em 0;
+//         background-color: #eee;
+//         border: 1px solid #666;
+//       }
+//     </style>
+//           <p>テスト</p>
+// 
+//     `;
+//   }
+// }
+// 
+// const elm = document.querySelector('#app')!;
+// customElements.define( 'hello-world', HelloWorld );
+//
