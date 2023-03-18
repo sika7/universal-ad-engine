@@ -1,9 +1,5 @@
 import { Core } from "./lib/core";
 
-// interface Window {
-//
-// }
-
 const core = new Core();
 core.main([{ template: 'default' }]);
 
