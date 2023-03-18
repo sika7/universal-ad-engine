@@ -26,26 +26,13 @@ function getProperty(
 
     if (typeof result[propertyArray[i]] === "undefined") return defaultValue;
 
-    if (typeof result[propertyArray[i]] === "object") {
-      result = result[propertyArray[i]];
-    }
-
-    if (typeof result[propertyArray[i]] === "function") {
-      result = result[propertyArray[i]];
-    }
-
-    if (typeof result[propertyArray[i]] === "string") {
-      result = result[propertyArray[i]];
-    }
-
-    if (typeof result[propertyArray[i]] === "number") {
-      result = result[propertyArray[i]];
-    }
-
-    if (typeof result[propertyArray[i]] === "boolean") {
-      result = result[propertyArray[i]];
-    }
+    result = result[propertyArray[i]];
   }
+  if (typeof result === "object") return result;
+  if (typeof result === "function") return result;
+  if (typeof result === "string") return result;
+  if (typeof result === "number") return result;
+  if (typeof result === "boolean") return result;
   return result;
 }
 
