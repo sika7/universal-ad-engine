@@ -15,7 +15,7 @@ p {
     `;
   }
 
-  render() {
+  render(): string {
     return `
 <p>a</p>
 <p class="{{ name}}" [click]="test()">テスト</p>
