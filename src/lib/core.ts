@@ -1,10 +1,10 @@
-function variablesFormat(html: string) {
+function variablesFormat(html: string): string {
   html = html.replace(/\{\{[ 　]+/g, "{{");
   html = html.replace(/[ 　]+\}\}/g, "}}");
   return html;
 }
 
-function getVariables(html: string) {
+function getVariables(html: string): string[] {
   const findPattern = new RegExp(/\{\{(.+)\}\}/g);
   const replacePattern = new RegExp(/\{\{(.+)\}\}/);
   const data = html.match(findPattern);
@@ -12,21 +12,19 @@ function getVariables(html: string) {
   return data?.map((data) => data.match(replacePattern)![1]);
 }
 
-function getProperty(
-  object: object | undefined,
+function getProperty<T>(
+  object: T | undefined,
   propertyPath: string,
   defaultValue?: any
-) {
+): any {
   if (!object) return defaultValue;
 
   let result: any = object;
   const propertyArray = propertyPath.split(".");
-  for (let i = 0; i <= propertyArray.length - 1; i += 1) {
-    if (propertyArray[i] === "") return defaultValue;
-
-    if (typeof result[propertyArray[i]] === "undefined") return defaultValue;
-
-    result = result[propertyArray[i]];
+  for (const property of propertyArray) {
+    if (property === "") return defaultValue;
+    if (typeof result[property] === "undefined") return defaultValue;
+    result = result[property];
   }
   if (typeof result === "object") return result;
   if (typeof result === "function") return result;
@@ -55,7 +53,7 @@ function replaceData(html: string, variables: string[], test: Test) {
 }
 
 function applyHtmlVariable(test: Test) {
-  const html = test.html();
+  const html = test.render();
 
   const _html = variablesFormat(html);
   const values = getVariables(_html);
@@ -68,21 +66,21 @@ class Test {
   name = "huga";
 
   test() {
-    return "piyo";
-  }
-
-  html() {
-    return `
-<p>テスト</p>
-<p>{{ name }}</p>
-<p>テスト</p>
-<p>{{ test() }}</p>
-<p>{{ name }}</p>
-    `;
+    return false;
   }
 
   css() {
     return "";
+  }
+
+  render() {
+    return `
+<p>a</p>
+<p>{{ name }}</p>
+<p class="{{ name}}">テスト</p>
+<p>{{ test() }}</p>
+<p>{{name }}</p>
+    `;
   }
 }
 
