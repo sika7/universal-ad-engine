@@ -18,6 +18,10 @@ function createVariableList(html: string): string[] {
   return data.map((data) => data.match(replacePattern)![1]);
 }
 
+export function getMethodList(object: object) {
+  return Object.getOwnPropertyNames(Object.getPrototypeOf(object))
+}
+
 function getProperty<T>(
   object: T | undefined,
   propertyPath: string,
