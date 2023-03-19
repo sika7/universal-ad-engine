@@ -2,7 +2,6 @@ import { render } from "./template-engine";
 import { getProperty } from "./utility";
 
 export interface IUniversalAdTemplate {
-  id: string;
   style?(): string;
   render(): string;
 }
@@ -38,9 +37,8 @@ export function generate(universalAd: IUniversalAdTemplate): string {
   `;
 }
 
-export function ssrGenerate(universalAd: IUniversalAdTemplate): string {
+export function ssrGenerate(id: string, universalAd: IUniversalAdTemplate): string {
   // 途中
-  const id = universalAd.id;
   const html = htmlText(universalAd);
   const style = styleText(universalAd);
   return `
