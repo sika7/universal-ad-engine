@@ -15,7 +15,6 @@ export class Core {
     customElements.define("universal-ad-unit", WebComponentWrapper);
 
     const component = new WebComponentWrapper("#app", new UniversalAdTemplate());
-    component.render();
   }
 
   request() {}

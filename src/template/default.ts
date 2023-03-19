@@ -1,14 +1,20 @@
-import { getMethodList, IUniversalAdTemplate } from "../lib/universal-ad-template";
+import {
+  getMethodList,
+  IUniversalAdTemplate,
+} from "../lib/universal-ad-template";
 
 export class UniversalAdTemplate implements IUniversalAdTemplate {
   constructor() {}
 
+  num = 0;
+
   test() {
-    console.log('hoge', getMethodList(this));
+    this.num++;
+    console.log("hoge", getMethodList(this));
   }
 
   hoge() {
-    alert('hoge');
+    alert("hoge");
   }
 
   style(): string {
@@ -21,7 +27,7 @@ p {
 
   render(): string {
     return `
-<p>a</p>
+<p>{{ num }}</p>
 <p class="{{ name}}" [click]="test()">テスト</p>
     `;
   }
