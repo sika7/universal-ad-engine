@@ -1,3 +1,4 @@
+import { domRender } from "./render";
 import {
   applyHtmlVariable,
   executeMethod,
@@ -6,11 +7,21 @@ import {
 } from "./universal-ad-template";
 
 export class WebComponentWrapper extends HTMLElement {
+  id: string;
   template: IUniversalAdTemplate;
 
-  constructor(template: IUniversalAdTemplate) {
+  constructor(id: string, template: IUniversalAdTemplate) {
     super();
+    this.id = id;
     this.template = template;
+  }
+
+  render() {
+    const elm = document.querySelector(this.id)!;
+    if (!elm) return;
+    const fragment = document.createDocumentFragment();
+    fragment.appendChild(this);
+    domRender(elm, fragment);
   }
 
   connectedCallback() {

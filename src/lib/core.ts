@@ -1,5 +1,4 @@
 import { UniversalAdTemplate } from "../template/default";
-import { render } from "./render";
 import { WebComponentWrapper } from "./web-components-wrapper";
 
 export class Core {
@@ -15,12 +14,8 @@ export class Core {
     // console.log("test2", getProperty(test2, "b"));
     customElements.define("universal-ad-unit", WebComponentWrapper);
 
-    const elm = document.querySelector("#app")!;
-    const fragment = document.createDocumentFragment();
-
-    fragment.appendChild(new WebComponentWrapper(new UniversalAdTemplate()));
-
-    render(elm, fragment);
+    const component = new WebComponentWrapper("#app", new UniversalAdTemplate());
+    component.render();
   }
 
   request() {}

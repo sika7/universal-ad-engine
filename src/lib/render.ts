@@ -4,7 +4,7 @@ function removeChildAll(targetElm: Element) {
   }
 }
 
-export function render(targetElm: Element, fragment: DocumentFragment) {
+export function domRender(targetElm: Element, fragment: DocumentFragment) {
   removeChildAll(targetElm);
   targetElm.appendChild(fragment);
 }
