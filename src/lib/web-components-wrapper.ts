@@ -33,6 +33,7 @@ export class WebComponentWrapper extends HTMLElement {
       data.addEventListener(event, () => {
         executeMethod(this.template, atter);
       });
+      data.removeAttribute(atterName);
     });
   }
 
