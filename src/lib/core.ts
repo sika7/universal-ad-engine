@@ -34,34 +34,41 @@ function getProperty<T>(
   return result;
 }
 
-function execValue(test: Test, propertyPath: string): any {
-  const func = getProperty(test, propertyPath.replace(/\(\)/g, ""));
+function execValue(
+  universalAd: UniversalAdTemplate,
+  propertyPath: string
+): any {
+  const func = getProperty(universalAd, propertyPath.replace(/\(\)/g, ""));
   if (!func) return "";
-  return func.call(test);
+  return func.call(universalAd);
 }
 
-function replaceValue(test: Test, propertyPath: string) {
-  if (propertyPath.match(/.*\(\)/)) return execValue(test, propertyPath);
-  return getProperty(test, propertyPath, "");
+function replaceValue(universalAd: UniversalAdTemplate, propertyPath: string) {
+  if (propertyPath.match(/.*\(\)/)) return execValue(universalAd, propertyPath);
+  return getProperty(universalAd, propertyPath, "");
 }
 
-function replaceData(html: string, variables: string[], test: Test) {
+function replaceData(
+  html: string,
+  variables: string[],
+  universalAd: UniversalAdTemplate
+) {
   variables.map(
     (data) =>
-      (html = html.replace("{{" + data + "}}", replaceValue(test, data)))
+      (html = html.replace("{{" + data + "}}", replaceValue(universalAd, data)))
   );
   return html;
 }
 
-function applyHtmlVariable(test: Test) {
-  const html = test.render();
+function applyHtmlVariable(universalAd: UniversalAdTemplate) {
+  const html = universalAd.render();
 
   const _html = variablesFormat(html);
   const values = getVariables(_html);
-  return replaceData(_html, values, test);
+  return replaceData(_html, values, universalAd);
 }
 
-class Test {
+class UniversalAdTemplate {
   constructor() {}
 
   render() {
@@ -87,7 +94,7 @@ export class Core {
     // };
     // console.log("test2", getProperty(test2, "b"));
 
-    const test = new Test();
+    const test = new UniversalAdTemplate();
     console.log("test", applyHtmlVariable(test));
   }
 
