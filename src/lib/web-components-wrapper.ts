@@ -2,6 +2,7 @@ import {
   applyHtmlVariable,
   executeMethod,
   IUniversalAdTemplate,
+  styleText,
 } from "./universal-ad-template";
 
 export class WebComponentWrapper extends HTMLElement {
@@ -16,9 +17,11 @@ export class WebComponentWrapper extends HTMLElement {
     const shadow = this.attachShadow({ mode: "closed" });
 
     const html = applyHtmlVariable(this.template);
+    const style = styleText(this.template);
 
     shadow.innerHTML = `
     <style>
+    ${style}
     </style>
     ${html}
     `;

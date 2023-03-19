@@ -7,6 +7,14 @@ export class UniversalAdTemplate implements IUniversalAdTemplate {
     console.log('hoge');
   }
 
+  style(): string {
+    return `
+p {
+  color: blue;
+}
+    `;
+  }
+
   render() {
     return `
 <p>a</p>

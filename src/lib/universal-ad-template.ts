@@ -50,7 +50,8 @@ export function executeMethod(
 }
 
 function replaceValue(universalAd: IUniversalAdTemplate, propertyPath: string) {
-  if (propertyPath.match(/.*\(\)/)) return executeMethod(universalAd, propertyPath);
+  if (propertyPath.match(/.*\(\)/))
+    return executeMethod(universalAd, propertyPath);
   return getProperty(universalAd, propertyPath, "");
 }
 
@@ -70,4 +71,10 @@ export function applyHtmlVariable(universalAd: IUniversalAdTemplate) {
   const html = normalizeVariables(universalAd.render());
   const values = createVariableList(html);
   return replaceVariable(html, values, universalAd);
+}
+
+export function styleText(universalAd: IUniversalAdTemplate): string {
+  const func = getProperty(universalAd, "style");
+  if (!func) return "";
+  return func();
 }
