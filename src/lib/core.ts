@@ -1,21 +1,5 @@
-import {
-  applyHtmlVariable,
-  IUniversalAdTemplate,
-} from "./universal-ad-template";
-
-class UniversalAdTemplate implements IUniversalAdTemplate {
-  constructor() {}
-
-  render() {
-    return `
-<p>a</p>
-<p>{{ name }}</p>
-<p class="{{ name}}">テスト</p>
-<p>{{ test() }}</p>
-<p>{{name }}</p>
-    `;
-  }
-}
+import { UniversalAdTemplate } from "../template/default";
+import { applyHtmlVariable } from "./universal-ad-template";
 
 export class Core {
   constructor() {}

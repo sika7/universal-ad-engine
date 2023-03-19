@@ -1,19 +1,19 @@
 export interface IUniversalAdTemplate {
-  render(): string,
+  render(): string;
 }
 
-function variablesFormat(html: string): string {
+function normalizeVariables(html: string): string {
   html = html.replace(/\{\{[ 　]+/g, "{{");
   html = html.replace(/[ 　]+\}\}/g, "}}");
   return html;
 }
 
-function getVariables(html: string): string[] {
+function createVariableList(html: string): string[] {
   const findPattern = new RegExp(/\{\{(.+)\}\}/g);
   const replacePattern = new RegExp(/\{\{(.+)\}\}/);
   const data = html.match(findPattern);
   if (!data) return [];
-  return data?.map((data) => data.match(replacePattern)![1]);
+  return data.map((data) => data.match(replacePattern)![1]);
 }
 
 function getProperty<T>(
@@ -38,7 +38,7 @@ function getProperty<T>(
   return result;
 }
 
-function execValue(
+function executeMethod(
   universalAd: IUniversalAdTemplate,
   propertyPath: string
 ): any {
@@ -48,11 +48,11 @@ function execValue(
 }
 
 function replaceValue(universalAd: IUniversalAdTemplate, propertyPath: string) {
-  if (propertyPath.match(/.*\(\)/)) return execValue(universalAd, propertyPath);
+  if (propertyPath.match(/.*\(\)/)) return executeMethod(universalAd, propertyPath);
   return getProperty(universalAd, propertyPath, "");
 }
 
-function replaceData(
+function replaceVariable(
   html: string,
   variables: string[],
   universalAd: IUniversalAdTemplate
@@ -65,10 +65,7 @@ function replaceData(
 }
 
 export function applyHtmlVariable(universalAd: IUniversalAdTemplate) {
-  const html = universalAd.render();
-
-  const _html = variablesFormat(html);
-  const values = getVariables(_html);
-  return replaceData(_html, values, universalAd);
+  const html = normalizeVariables(universalAd.render());
+  const values = createVariableList(html);
+  return replaceVariable(html, values, universalAd);
 }
-
