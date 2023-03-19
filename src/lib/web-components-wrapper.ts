@@ -1,9 +1,8 @@
 import { domRender } from "./render";
 import {
-  applyHtmlVariable,
   executeMethod,
   IUniversalAdTemplate,
-  styleText,
+  generate,
 } from "./universal-ad-template";
 
 interface IWebComponentWrapper {
@@ -34,15 +33,7 @@ export class WebComponentWrapper
   renderedCallback() {}
 
   render() {
-    const html = applyHtmlVariable(this.template);
-    const style = styleText(this.template);
-
-    this.shadow.innerHTML = `
-      <style>
-      ${style}
-      </style>
-      ${html}
-    `;
+    this.shadow.innerHTML = generate(this.template);
     this.setClickEvent();
   }
 
