@@ -34,8 +34,9 @@ function getProperty<T>(
   return result;
 }
 
-function execValue(test: Test, propertyPath: string) {
-  const func = getProperty(test, propertyPath.replace(/\(\)/g, ""), () => {});
+function execValue(test: Test, propertyPath: string): any {
+  const func = getProperty(test, propertyPath.replace(/\(\)/g, ""));
+  if (!func) return "";
   return func.call(test);
 }
 
@@ -62,16 +63,6 @@ function applyHtmlVariable(test: Test) {
 
 class Test {
   constructor() {}
-
-  name = "huga";
-
-  test() {
-    return false;
-  }
-
-  css() {
-    return "";
-  }
 
   render() {
     return `
