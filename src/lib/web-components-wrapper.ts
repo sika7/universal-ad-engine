@@ -1,4 +1,8 @@
-import { applyHtmlVariable, IUniversalAdTemplate } from "./universal-ad-template";
+import {
+  applyHtmlVariable,
+  executeMethod,
+  IUniversalAdTemplate,
+} from "./universal-ad-template";
 
 export class WebComponentWrapper extends HTMLElement {
   template: IUniversalAdTemplate;
@@ -18,6 +22,21 @@ export class WebComponentWrapper extends HTMLElement {
     </style>
     ${html}
     `;
+
+    this.setClickEvent(shadow);
+  }
+
+  setEvent(shadow: ShadowRoot, atterName: string, event: string) {
+    const clickElm = shadow.querySelectorAll("[" + atterName + "]");
+    clickElm.forEach((data) => {
+      const atter = data.getAttribute(atterName)!;
+      data.addEventListener(event, () => {
+        executeMethod(this.template, atter);
+      });
+    });
+  }
+
+  setClickEvent(shadow: ShadowRoot) {
+    this.setEvent(shadow, "c", "click");
   }
 }
-

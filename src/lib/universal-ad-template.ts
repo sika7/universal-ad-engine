@@ -6,6 +6,7 @@ export interface IUniversalAdTemplate {
 function normalizeVariables(html: string): string {
   html = html.replace(/\{\{[ 　]+/g, "{{");
   html = html.replace(/[ 　]+\}\}/g, "}}");
+  html = html.replace(/\[click\]/g, "c");
   return html;
 }
 
@@ -39,7 +40,7 @@ function getProperty<T>(
   return result;
 }
 
-function executeMethod(
+export function executeMethod(
   universalAd: IUniversalAdTemplate,
   propertyPath: string
 ): any {
