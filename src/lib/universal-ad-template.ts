@@ -1,4 +1,5 @@
 export interface IUniversalAdTemplate {
+  style?(): string;
   render(): string;
 }
 

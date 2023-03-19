@@ -1,5 +1,6 @@
 import { UniversalAdTemplate } from "../template/default";
-import { applyHtmlVariable } from "./universal-ad-template";
+import { render } from "./render";
+import { WebComponentWrapper } from "./web-components-wrapper";
 
 export class Core {
   constructor() {}
@@ -12,36 +13,15 @@ export class Core {
     //   b: true,
     // };
     // console.log("test2", getProperty(test2, "b"));
+    customElements.define("universal-ad-unit", WebComponentWrapper);
 
-    const test = new UniversalAdTemplate();
-    console.log("test", applyHtmlVariable(test));
+    const elm = document.querySelector("#app")!;
+    const fragment = document.createDocumentFragment();
+
+    fragment.appendChild(new WebComponentWrapper(new UniversalAdTemplate()));
+
+    render(elm, fragment);
   }
 
   request() {}
 }
-
-// class HelloWorld extends HTMLElement {
-//   connectedCallback() {
-//     // this.textContent = "";
-//
-//     const shadow = this.attachShadow({ mode: "closed" });
-//     shadow.innerHTML = `
-//     <style>
-//       p {
-//         text-align: center;
-//         font-weight: normal;
-//         padding: 1em;
-//         margin: 0 0 2em 0;
-//         background-color: #eee;
-//         border: 1px solid #666;
-//       }
-//     </style>
-//           <p>テスト</p>
-//
-//     `;
-//   }
-// }
-//
-// const elm = document.querySelector('#app')!;
-// customElements.define( 'hello-world', HelloWorld );
-//
