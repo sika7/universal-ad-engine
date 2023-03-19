@@ -1,7 +1,4 @@
-import {
-  getMethodList,
-  IUniversalAdTemplate,
-} from "../lib/universal-ad-template";
+import { IUniversalAdTemplate } from "../lib/universal-ad-template";
 
 export class UniversalAdTemplate implements IUniversalAdTemplate {
   constructor() {}
@@ -10,7 +7,6 @@ export class UniversalAdTemplate implements IUniversalAdTemplate {
 
   test() {
     this.num++;
-    console.log("hoge", getMethodList(this));
   }
 
   hoge() {
