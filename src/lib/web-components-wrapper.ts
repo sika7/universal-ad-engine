@@ -27,7 +27,7 @@ export class WebComponentWrapper
     this.shadow = this.attachShadow({ mode: "closed" });
 
     this.render();
-    this.appendDom();
+    this.applyDom();
   }
 
   connectedCallback() {}
@@ -46,7 +46,7 @@ export class WebComponentWrapper
     this.setClickEvent();
   }
 
-  appendDom() {
+  applyDom() {
     const elm = document.querySelector(this.id)!;
     if (!elm) return;
     const fragment = document.createDocumentFragment();
