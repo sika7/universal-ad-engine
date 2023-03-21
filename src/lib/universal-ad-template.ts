@@ -1,17 +1,6 @@
 import { render } from "./template-engine";
 import { getProperty } from "./utility";
 
-export interface ITemplateData {
-  [name: string]: () => IUniversalAdTemplate;
-}
-
-export interface IPluginTemplate {
-  name: string;
-  template: () => IUniversalAdTemplate;
-}
-
-export type importPluginTemplate = () => IPluginTemplate;
-
 export interface IUniversalAdTemplate {
   style?(): string;
   render(): string;
