@@ -2,7 +2,7 @@ import { settingManager } from "./setting-manager";
 import { importPluginTemplate, templateManager } from "./template-manager";
 import { WebComponentWrapper } from "./web-components-wrapper";
 
-export class Core {
+class Core {
   constructor() {}
 
   templates(templates: importPluginTemplate[]) {
@@ -26,3 +26,5 @@ export class Core {
 
   request() {}
 }
+
+export const core = new Core();
