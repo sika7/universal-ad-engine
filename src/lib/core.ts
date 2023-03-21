@@ -1,4 +1,4 @@
-import { settingManager } from "./setting-manager";
+import { IUniversalAdSetting, settingManager } from "./setting-manager";
 import { templateManager, TPluginTemplate } from "./template-manager";
 import { WebComponentWrapper } from "./web-components-wrapper";
 
@@ -13,20 +13,22 @@ class Core {
     }
   }
 
-  main() {
-    settingManager.add({ id: "#app", template: "test" });
+  addUnit(data: IUniversalAdSetting) {
+    settingManager.add(data);
+  }
 
+  showUnit(id: string) {
     try {
-      for (const setting of settingManager.data) {
+      const setting = settingManager.get(id);
+      if (setting) {
         const myClass = templateManager.createInstance(setting.template);
         if (myClass) new WebComponentWrapper(setting.id, myClass());
       }
+      new Error("no setting");
     } catch (error) {
-      throw new Error('エラーが発生しました');
+      throw new Error("エラーが発生しました");
     }
   }
-
-  request() {}
 }
 
 export const core = new Core();
