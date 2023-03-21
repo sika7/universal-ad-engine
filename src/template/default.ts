@@ -4,28 +4,19 @@ import { IUniversalAdTemplate } from "../lib/universal-ad-template";
 class UniversalAdTemplate implements IUniversalAdTemplate {
   constructor() {}
 
-  num = 0;
-
-  test() {
-    this.num++;
-  }
-
-  hoge() {
-    alert("hoge");
-  }
-
   style(): string {
     return `
-p {
-  color: blue;
-}
+    p {}
     `;
   }
 
   render(): string {
     return `
-<p>{{ num }}</p>
-<p class="{{ name}}" [click]="test()">テスト</p>
+<div>
+  <a href="https://github.com/sika7/universal-ad-engine" target="_blank">
+    <img src="https://placehold.jp/3d4070/ffffff/300x300.png?text=%E5%BA%83%E5%91%8A" alt="テスト" />
+  </a>
+</div>
     `;
   }
 }
