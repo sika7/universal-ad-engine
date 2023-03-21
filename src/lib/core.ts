@@ -1,5 +1,5 @@
 import { settingManager } from "./setting-manager";
-import { importPluginTemplate, templateManager } from "./template-manager";
+import { templateManager, TPluginTemplate } from "./template-manager";
 import { WebComponentWrapper } from "./web-components-wrapper";
 
 class Core {
@@ -7,8 +7,10 @@ class Core {
     customElements.define("universal-ad-unit", WebComponentWrapper);
   }
 
-  templates(templates: importPluginTemplate[]) {
-    templateManager.addConfig(templates);
+  templates(templates: TPluginTemplate[]) {
+    for (const template of templates) {
+      templateManager.add(template);
+    }
   }
 
   main() {
