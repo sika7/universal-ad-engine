@@ -1,4 +1,7 @@
-import { IUniversalAdTemplate } from "../lib/universal-ad-template";
+import {
+  IPluginTemplate,
+  IUniversalAdTemplate,
+} from "../lib/universal-ad-template";
 
 export class UniversalAdTemplate implements IUniversalAdTemplate {
   constructor() {}
@@ -27,4 +30,8 @@ p {
 <p class="{{ name}}" [click]="test()">テスト</p>
     `;
   }
+}
+
+export default function pluginUniversalAdTemplate(): IPluginTemplate {
+  return { name: "test", template: () => new UniversalAdTemplate() };
 }

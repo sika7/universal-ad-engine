@@ -1,6 +1,17 @@
 import { render } from "./template-engine";
 import { getProperty } from "./utility";
 
+export interface ITemplateData {
+  [name: string]: () => IUniversalAdTemplate;
+}
+
+export interface IPluginTemplate {
+  name: string;
+  template: () => IUniversalAdTemplate;
+}
+
+export type importPluginTemplate = () => IPluginTemplate;
+
 export interface IUniversalAdTemplate {
   style?(): string;
   render(): string;
@@ -37,7 +48,10 @@ export function generate(universalAd: IUniversalAdTemplate): string {
   `;
 }
 
-export function ssrGenerate(id: string, universalAd: IUniversalAdTemplate): string {
+export function ssrGenerate(
+  id: string,
+  universalAd: IUniversalAdTemplate
+): string {
   // 途中
   const html = htmlText(universalAd);
   const style = styleText(universalAd);
@@ -53,4 +67,3 @@ export function ssrGenerate(id: string, universalAd: IUniversalAdTemplate): stri
     ${html}
   `;
 }
-

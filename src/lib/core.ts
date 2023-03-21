@@ -1,20 +1,22 @@
-import { UniversalAdTemplate } from "../template/default";
+import { importPluginTemplate, ITemplateData } from "./universal-ad-template";
 import { WebComponentWrapper } from "./web-components-wrapper";
 
 export class Core {
+  private templateData: ITemplateData = {};
   constructor() {}
 
+  templates(templates: importPluginTemplate[]) {
+    templates.map((item) => {
+      const data = item();
+      this.templateData[data.name] = data.template;
+    });
+  }
+
   main() {
-    // const test2 = {
-    //   hoge: { fuga: [1, 2, 3], fuga2: 'a' },
-    //   fuga: 9,
-    //   piyo: "1",
-    //   b: true,
-    // };
-    // console.log("test2", getProperty(test2, "b"));
     customElements.define("universal-ad-unit", WebComponentWrapper);
 
-    const component = new WebComponentWrapper("#app", new UniversalAdTemplate());
+    const myClass = this.templateData["test"];
+    const component = new WebComponentWrapper("#app", myClass());
   }
 
   request() {}
