@@ -10,7 +10,7 @@ function domRender(targetElm: Element, fragment: DocumentFragment) {
 }
 
 export function applyDom(id: string, addElm: HTMLElement) {
-  const elm = document.querySelector(id);
+  const elm = document.querySelector(`#${id}`);
   if (!elm) return;
   const fragment = document.createDocumentFragment();
   fragment.appendChild(addElm);
