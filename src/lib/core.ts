@@ -3,15 +3,15 @@ import { importPluginTemplate, templateManager } from "./template-manager";
 import { WebComponentWrapper } from "./web-components-wrapper";
 
 class Core {
-  constructor() {}
+  constructor() {
+    customElements.define("universal-ad-unit", WebComponentWrapper);
+  }
 
   templates(templates: importPluginTemplate[]) {
     templateManager.addConfig(templates);
   }
 
   main() {
-    customElements.define("universal-ad-unit", WebComponentWrapper);
-
     settingManager.add({ id: "#app", template: "test" });
 
     try {
