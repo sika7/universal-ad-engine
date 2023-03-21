@@ -1,7 +1,5 @@
-import {
-  IPluginTemplate,
-  IUniversalAdTemplate,
-} from "../lib/universal-ad-template";
+import { IPluginTemplate } from "../lib/template-manager";
+import { IUniversalAdTemplate } from "../lib/universal-ad-template";
 
 export class UniversalAdTemplate implements IUniversalAdTemplate {
   constructor() {}
