@@ -1,3 +1,4 @@
+import { settingManager } from "./setting-manager";
 import { importPluginTemplate, templateManager } from "./template-manager";
 import { WebComponentWrapper } from "./web-components-wrapper";
 
@@ -11,8 +12,16 @@ export class Core {
   main() {
     customElements.define("universal-ad-unit", WebComponentWrapper);
 
-    const myClass = templateManager.createInstance("test");
-    if (myClass) new WebComponentWrapper("#app", myClass());
+    settingManager.add({ id: "#app", template: "test" });
+
+    try {
+      for (const setting of settingManager.data) {
+        const myClass = templateManager.createInstance(setting.template);
+        if (myClass) new WebComponentWrapper(setting.id, myClass());
+      }
+    } catch (error) {
+      throw new Error('エラーが発生しました');
+    }
   }
 
   request() {}
