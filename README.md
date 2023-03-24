@@ -6,14 +6,16 @@ About Universal Ad Engine
 The purpose of this project is to achieve easy debugging and secure ad rendering.
 
 
+## About flow
+
 ```mermaid
 flowchart TD
-  START --> A{設定の初期化}
-  A --> B{テンプレートのインポート}
-  B --> C{データの取得}
-  C --> D{テンプレのhmtl化}
-  D --> F{hmtlの無毒化 まだ}
-  F --> G{DOMに適応}
+  START --> A{Initialization of settings}
+  A --> B{Importing a Template}
+  B --> C{API request}
+  C --> D{Get the HTML of the Template}
+  D --> F{sanitize still}
+  F --> G{Apply to DOM}
 ```
 
 [About Templates](docs/template.md)
