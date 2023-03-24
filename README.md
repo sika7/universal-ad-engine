@@ -16,6 +16,8 @@ flowchart TD
   F --> G{DOMに適応}
 ```
 
+[About Templates](docs/template.md)
+
 ## TODO
 
 - Add a docks
