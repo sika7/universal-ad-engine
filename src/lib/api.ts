@@ -1,4 +1,6 @@
-export async function postRequest<T>(url: string, data: object = {}) {
+export type RequestType = "get" | "post";
+
+async function postRequest<T>(url: string, data: object = {}) {
   const response = await fetch(url, {
     method: "POST",
     cache: "no-cache",
@@ -9,9 +11,9 @@ export async function postRequest<T>(url: string, data: object = {}) {
     body: JSON.stringify(data),
   });
   return response.json() as T;
-};
+}
 
-export async function getRequest<T>(url: string) {
+async function getRequest<T>(url: string) {
   const response = await fetch(url, {
     method: "GET",
     cache: "no-cache",
@@ -21,5 +23,13 @@ export async function getRequest<T>(url: string) {
     referrerPolicy: "strict-origin-when-cross-origin",
   });
   return response.json() as T;
-};
+}
 
+export function apiRequest<T>(
+  requestType: RequestType,
+  url: string,
+  data: object = {}
+): Promise<T> {
+  if (requestType === "post") return postRequest<T>(url, data);
+  return getRequest<T>(url);
+}
