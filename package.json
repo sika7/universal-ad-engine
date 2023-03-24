@@ -1,8 +1,17 @@
 {
-  "name": "ad-engine",
+  "name": "universal-ad-engine",
+  "type": "module",
+  "files": ["dist"],
+  "main": "./dist/ua.umd.cjs",
+  "module": "./dist/ua.js",
+  "exports": {
+    ".": {
+      "import": "./dist/ua.js",
+      "require": "./dist/ua.umd.cjs"
+    }
+  },
   "private": true,
   "version": "0.0.0",
-  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
