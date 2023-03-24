@@ -30,4 +30,5 @@ flowchart TD
 - Support for sanitize
 - Support for Google Ad Manager
 - Publish the demo
+- Copyright policy
 
