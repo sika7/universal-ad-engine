@@ -85,7 +85,7 @@ class Example implements IUniversalAdTemplate {
     return `
 <div>
   <a [click]="link()">
-    <img src="{{ imgSrc() }}" alt="test image" />
+    <img src="{{ imgSrc }}" alt="test image" />
   </a>
 </div>
     `;
