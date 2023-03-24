@@ -1,9 +1,10 @@
 
-# 概要
+# overview
 
-「universal-ad-engine」について
+About Universal Ad Engine
 
-やりたいこと
+The purpose of this project is to achieve easy debugging and secure ad rendering.
+
 
 ```mermaid
 flowchart TD
@@ -14,4 +15,15 @@ flowchart TD
   D --> F{hmtlの無毒化 まだ}
   F --> G{DOMに適応}
 ```
+
+## TODO
+
+- Add a docks
+- Compatible with cdn
+- Compatible with modules
+- Publish to npm
+- Add a test
+- Support for sanitize
+- Support for Google Ad Manager
+- Publish the demo
 
