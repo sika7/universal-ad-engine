@@ -27,7 +27,7 @@ function pull(
 function attach(setting: IUniversalAdSetting | undefined) {
   if (!setting) return;
   const myClass = templateManager.createInstance(setting.template);
-  if (myClass) new WebComponentWrapper(setting.id, myClass());
+  if (myClass) return new WebComponentWrapper(setting.id, myClass());
 }
 
 class Core {
@@ -53,9 +53,10 @@ class Core {
   showUnit(id: string) {
     try {
       const setting = settingManager.get(id);
-      attach(setting);
+      const elm = attach(setting);
+      if (!elm) return;
       pull(setting, (value) => {
-        attach(setting);
+        elm.render();
       });
       new Error("no setting");
     } catch (error) {
