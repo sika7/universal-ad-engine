@@ -8,15 +8,20 @@ import { WebComponentWrapper } from "./web-components-wrapper";
 import { getProperty } from "./utility";
 import { apiRequest } from "./api";
 
-function pull(setting: IUniversalAdSetting | undefined, callback: (response: any) => void) {
+function pull(
+  setting: IUniversalAdSetting | undefined,
+  callback: (response: any) => void
+) {
   if (!setting) return;
   const api = getProperty(setting, "api") as IUniversalAdApi | undefined;
   if (!api) return;
-  apiRequest(api.type, api.url, api?.data).then((value: any) => {
-    callback(value);
-  }).catch(() => {
-    throw new Error("API request failed.");
-  });
+  apiRequest(api.type, api.url, api?.data)
+    .then((value: any) => {
+      callback(value);
+    })
+    .catch(() => {
+      throw new Error("API request failed.");
+    });
 }
 
 function attach(setting: IUniversalAdSetting | undefined) {
@@ -26,6 +31,7 @@ function attach(setting: IUniversalAdSetting | undefined) {
 }
 
 class Core {
+  freeze = false;
   constructor() {
     customElements.define("universal-ad-unit", WebComponentWrapper);
   }
@@ -36,7 +42,12 @@ class Core {
     }
   }
 
+  freezed() {
+    this.freeze = true;
+  }
+
   addUnit(data: IUniversalAdSetting) {
+    if (this.freeze) return;
     settingManager.add(data);
   }
 
