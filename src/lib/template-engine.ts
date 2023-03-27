@@ -26,7 +26,7 @@ export function normalizeVariables(html: string): string {
 }
 
 export function createVariableList(html: string): string[] {
-  const findPattern = new RegExp(/\{\{(.+)\}\}/g);
+  const findPattern = new RegExp(/\{\{(.*?)\}\}/g);
   const replacePattern = new RegExp(/\{\{(.+)\}\}/);
   const data = html.match(findPattern);
   if (!data) return [];
