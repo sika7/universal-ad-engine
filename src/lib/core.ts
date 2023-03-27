@@ -31,7 +31,7 @@ function attach(setting: IUniversalAdSetting | undefined) {
 }
 
 class Core {
-  freeze = false;
+  private freeze = false;
   constructor() {
     customElements.define("universal-ad-unit", WebComponentWrapper);
   }
