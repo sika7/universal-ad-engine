@@ -53,4 +53,4 @@ class Core {
   }
 }
 
-export const core = new Core();
+export const UniversalAd = new Core();
