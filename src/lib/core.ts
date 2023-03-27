@@ -31,7 +31,6 @@ function attach(setting: IUniversalAdSetting | undefined) {
 }
 
 class Core {
-  private freeze = false;
   constructor() {
     customElements.define("universal-ad-unit", WebComponentWrapper);
   }
@@ -43,11 +42,11 @@ class Core {
   }
 
   freezed() {
-    this.freeze = true;
+    templateManager.freezed();
+    settingManager.freezed();
   }
 
   addUnit(data: IUniversalAdSetting) {
-    if (this.freeze) return;
     settingManager.add(data);
   }
 
@@ -55,7 +54,7 @@ class Core {
     try {
       const setting = settingManager.get(id);
       attach(setting);
-      pull(setting, () => {
+      pull(setting, (value) => {
         attach(setting);
       });
       new Error("no setting");

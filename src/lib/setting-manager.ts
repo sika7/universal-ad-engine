@@ -13,11 +13,17 @@ export interface IUniversalAdSetting {
 }
 
 class SettingManager {
+  private freeze = false;
   data: IUniversalAdSetting[] = [];
 
   constructor() {}
 
+  freezed() {
+    this.freeze = true;
+  }
+
   add(data: IUniversalAdSetting) {
+    if (this.freeze) return;
     this.data.push(data);
   }
 

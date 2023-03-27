@@ -12,11 +12,17 @@ interface ITemplateData {
 }
 
 class TemplateManager {
+  private freeze = false;
   private data: ITemplateData = {};
 
   constructor() {}
 
+  freezed() {
+    this.freeze = true;
+  }
+
   add(plugin: TPluginTemplate) {
+    if (this.freeze) return;
     const data = plugin();
     this.data[data.name] = data.template;
   }
