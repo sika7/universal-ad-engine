@@ -54,6 +54,7 @@ class Core {
   showUnit(id: string) {
     try {
       const setting = settingManager.get(id);
+      attach(setting);
       pull(setting, () => {
         attach(setting);
       });
