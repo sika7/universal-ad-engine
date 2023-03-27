@@ -29,7 +29,9 @@ export class WebComponentWrapper
     applyDom(this.id, this);
   }
 
-  connectedCallback() {}
+  connectedCallback() {
+    this.setAttribute("id", `ua-${this.id}`);
+  }
   renderedCallback() {}
 
   render() {
