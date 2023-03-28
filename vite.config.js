@@ -5,7 +5,7 @@ export default defineConfig({
   build: {
     lib: {
       // 複数のエントリーポイントのディクショナリや配列にもできます
-      entry: resolve(__dirname, "src/lib/main.ts"),
+      entry: resolve(__dirname, "src/main.js"),
       name: "UniversalAd",
       // 適切な拡張子が追加されます
       fileName: "ua",
