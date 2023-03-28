@@ -3,6 +3,7 @@ import { getProperty } from "./utility";
 
 export interface IUniversalAdTemplate {
   style?(): string;
+  update(response: any): void;
   render(): string;
 }
 

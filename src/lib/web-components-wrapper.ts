@@ -1,4 +1,6 @@
+import { apiRequest } from "./api";
 import { applyDom, setEvent } from "./dom";
+import { IUniversalAdApi } from "./setting-manager";
 import {
   executeMethod,
   IUniversalAdTemplate,
@@ -17,12 +19,18 @@ export class WebComponentWrapper
 {
   id: string;
   template: IUniversalAdTemplate;
+  api: IUniversalAdApi | undefined;
   shadow: ShadowRoot;
 
-  constructor(id: string, template: IUniversalAdTemplate) {
+  constructor(
+    id: string,
+    template: IUniversalAdTemplate,
+    api: IUniversalAdApi | undefined
+  ) {
     super();
     this.id = id;
     this.template = template;
+    this.api = api;
     this.shadow = this.attachShadow({ mode: "closed" });
 
     this.render();
@@ -33,6 +41,17 @@ export class WebComponentWrapper
     this.setAttribute("id", `ua-${this.id}`);
   }
   renderedCallback() {}
+
+  pull() {
+    if (!this.api) return;
+    apiRequest(this.api.type, this.api.url, this.api?.data)
+      .then((value: any) => {
+        this.template.update(value);
+      })
+      .catch(() => {
+        // throw new Error("API request failed.");
+      });
+  }
 
   render() {
     this.shadow.innerHTML = generate(this.template);

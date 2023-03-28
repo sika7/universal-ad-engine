@@ -1,33 +1,12 @@
-import {
-  IUniversalAdSetting,
-  IUniversalAdApi,
-  settingManager,
-} from "./setting-manager";
+import { IUniversalAdSetting, settingManager } from "./setting-manager";
 import { templateManager, TPluginTemplate } from "./template-manager";
 import { WebComponentWrapper } from "./web-components-wrapper";
-import { getProperty } from "./utility";
-import { apiRequest } from "./api";
-
-function pull(
-  setting: IUniversalAdSetting | undefined,
-  callback: (response: any) => void
-) {
-  if (!setting) return;
-  const api = getProperty(setting, "api") as IUniversalAdApi | undefined;
-  if (!api) return;
-  apiRequest(api.type, api.url, api?.data)
-    .then((value: any) => {
-      callback(value);
-    })
-    .catch(() => {
-      throw new Error("API request failed.");
-    });
-}
 
 function attach(setting: IUniversalAdSetting | undefined) {
   if (!setting) return;
   const myClass = templateManager.createInstance(setting.template);
-  if (myClass) return new WebComponentWrapper(setting.id, myClass());
+  if (!myClass) throw new Error("No template registration found.");
+  return new WebComponentWrapper(setting.id, myClass(), setting?.api);
 }
 
 class Core {
@@ -55,9 +34,8 @@ class Core {
       const setting = settingManager.get(id);
       const elm = attach(setting);
       if (!elm) return;
-      pull(setting, (value) => {
-        elm.render();
-      });
+      elm.render();
+      elm.pull();
       new Error("no setting");
     } catch (error) {
       throw new Error("An error has occurred.");
