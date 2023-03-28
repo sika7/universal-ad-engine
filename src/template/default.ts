@@ -12,6 +12,8 @@ class UniversalAdTemplate implements IUniversalAdTemplate {
   width = 300;
   alt = "";
 
+  closeClass = "";
+
   style(): string {
     return `
     div {
@@ -23,6 +25,9 @@ class UniversalAdTemplate implements IUniversalAdTemplate {
       width: 300px;
       height: 300px;
       margin: auto;
+    }
+    .close {
+      display: none;
     }
     `;
   }
@@ -36,9 +41,14 @@ class UniversalAdTemplate implements IUniversalAdTemplate {
     if (response.alt) this.alt = response.alt;
   }
 
+  click() {
+    console.log("click");
+    this.closeClass = 'close';
+  }
+
   render(): string {
     return `
-<div>
+<div class="{{ closeClass }}" [click]="click()" >
   <a href="{{ url }}" target="_blank">
     <img src="{{ imgSrc }}" alt="{{ alt }}" width="{{ width }}" height="{{ height }}" />
   </a>
