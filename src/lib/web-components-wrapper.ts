@@ -13,23 +13,24 @@ interface IWebComponentWrapper {
   render(): void;
 }
 
+let template: IUniversalAdTemplate | undefined;
+
 export class WebComponentWrapper
   extends HTMLElement
   implements IWebComponentWrapper
 {
   id: string;
-  private readonly template: IUniversalAdTemplate;
   api: IUniversalAdApi | undefined;
   shadow: ShadowRoot;
 
   constructor(
     id: string,
-    template: IUniversalAdTemplate,
+    templateInstance: IUniversalAdTemplate,
     api: IUniversalAdApi | undefined
   ) {
     super();
     this.id = id;
-    this.template = Object.freeze(template);
+    template = templateInstance;
     this.api = api;
     this.shadow = this.attachShadow({ mode: "closed" });
 
@@ -48,7 +49,8 @@ export class WebComponentWrapper
     if (!this.api) return;
     apiRequest(this.api.type, this.api.url, this.api?.data)
       .then((value: any) => {
-        this.template.update(value);
+        if (!template) return;
+        template.update(value);
       })
       .catch(() => {
         // throw new Error("API request failed.");
@@ -65,13 +67,15 @@ export class WebComponentWrapper
   }
 
   render() {
-    this.shadow.innerHTML = generate(this.template);
+    if (!template) return;
+    this.shadow.innerHTML = generate(template);
     this.setClickEvent();
   }
 
   setClickEvent() {
     setEvent(this.shadow, "c", "click", (atter: string) => {
-      executeMethod(this.template, atter);
+      if (!template) return;
+      executeMethod(template, atter);
       this.render();
     });
   }
