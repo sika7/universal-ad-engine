@@ -59,7 +59,9 @@ export class WebComponentWrapper
     this.style.display = "none";
     const limit = 180;
     if (second > limit) throw new Error("The duration to hide is too long.");
-    setTimeout(() => {this.style.display = "block";}, 1000 * second);
+    setTimeout(() => {
+      this.style.display = "block";
+    }, 1000 * second);
   }
 
   render() {
