@@ -15,6 +15,8 @@ interface IWebComponentWrapper {
 
 let template: IUniversalAdTemplate | undefined;
 
+let api: IUniversalAdApi | undefined;
+
 export class WebComponentWrapper
   extends HTMLElement
   implements IWebComponentWrapper
@@ -26,12 +28,12 @@ export class WebComponentWrapper
   constructor(
     id: string,
     templateInstance: IUniversalAdTemplate,
-    api: IUniversalAdApi | undefined
+    apiData: IUniversalAdApi | undefined
   ) {
     super();
     this.id = id;
     template = templateInstance;
-    this.api = api;
+    api = apiData;
     this.shadow = this.attachShadow({ mode: "closed" });
 
     this.render();
@@ -46,8 +48,8 @@ export class WebComponentWrapper
   renderedCallback() {}
 
   pull() {
-    if (!this.api) return;
-    apiRequest(this.api.type, this.api.url, this.api?.data)
+    if (!api) return;
+    apiRequest(api.type, api.url, api?.data)
       .then((value: any) => {
         if (!template) return;
         template.update(value);
