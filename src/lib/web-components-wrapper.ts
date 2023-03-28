@@ -29,7 +29,7 @@ export class WebComponentWrapper
   ) {
     super();
     this.id = id;
-    this.template = template;
+    this.template = Object.freeze(template);
     this.api = api;
     this.shadow = this.attachShadow({ mode: "closed" });
 
