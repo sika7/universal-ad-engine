@@ -35,6 +35,7 @@ class Core {
       const elm = attach(setting);
       if (!elm) return;
       elm.render();
+      elm.hide(5);
       if (setting?.api) {
         elm.pull();
       }
