@@ -35,7 +35,9 @@ class Core {
       const elm = attach(setting);
       if (!elm) return;
       elm.render();
-      elm.pull();
+      if (setting?.api) {
+        elm.pull();
+      }
       new Error("no setting");
     } catch (error) {
       throw new Error("An error has occurred.");
