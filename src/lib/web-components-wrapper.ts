@@ -9,7 +9,7 @@ import {
 
 interface IWebComponentWrapper {
   id: string;
-  template: IUniversalAdTemplate;
+  api: IUniversalAdApi | undefined;
   render(): void;
 }
 
@@ -18,7 +18,7 @@ export class WebComponentWrapper
   implements IWebComponentWrapper
 {
   id: string;
-  template: IUniversalAdTemplate;
+  private readonly template: IUniversalAdTemplate;
   api: IUniversalAdApi | undefined;
   shadow: ShadowRoot;
 
@@ -35,6 +35,8 @@ export class WebComponentWrapper
 
     this.render();
     applyDom(this.id, this);
+
+    Object.freeze(this);
   }
 
   connectedCallback() {
