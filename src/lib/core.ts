@@ -15,7 +15,7 @@ export interface IUniversalAdSetting {
   api?: IUniversalAdApi;
 }
 
-interface IUniversalAdApi {
+export interface IUniversalAdApi {
   url: string;
   type: RequestType;
   data: Record<string, any>;
