@@ -1,6 +1,6 @@
 import { apiRequest } from "./api";
+import { IUniversalAdApi } from "./core";
 import { applyDom, setEvent } from "./dom";
-import { IUniversalAdApi } from "./setting-manager";
 import {
   executeMethod,
   IUniversalAdTemplate,
