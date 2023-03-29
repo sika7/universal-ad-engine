@@ -53,6 +53,7 @@ export class WebComponentWrapper
       .then((value: any) => {
         if (!template) return;
         template.update(value);
+        this.render();
       })
       .catch(() => {
         // throw new Error("API request failed.");
