@@ -1,6 +1,7 @@
 import { IPluginTemplate } from "../lib/template-manager";
 import { IUniversalAdTemplate } from "../lib/universal-ad-template";
 import { TypeResponseBanner } from "../response/banner";
+import * as style from "./default.css?inline";
 
 class UniversalAdTemplate implements IUniversalAdTemplate {
   constructor() {}
@@ -15,21 +16,7 @@ class UniversalAdTemplate implements IUniversalAdTemplate {
   closeClass = "";
 
   style(): string {
-    return `
-    div {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      width: 300px;
-      height: 300px;
-      margin: auto;
-    }
-    .close {
-      display: none;
-    }
-    `;
+    return style.default;
   }
 
   update(response: TypeResponseBanner) {
@@ -43,13 +30,13 @@ class UniversalAdTemplate implements IUniversalAdTemplate {
 
   click() {
     console.log("click");
-    this.closeClass = 'close';
+    this.closeClass = "close";
   }
 
   render(): string {
     return `
 <div class="{{ closeClass }}" [click]="click()" >
-  <a href="{{ url }}" target="_blank">
+  <a>
     <img src="{{ imgSrc }}" alt="{{ alt }}" width="{{ width }}" height="{{ height }}" />
   </a>
 </div>
