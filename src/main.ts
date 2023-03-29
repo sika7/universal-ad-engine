@@ -1,7 +1,6 @@
 import { UniversalAd } from "./lib/core";
 import pluginUniversalAdTemplate from "./template/default";
 
-UniversalAd.templates([pluginUniversalAdTemplate]);
-UniversalAd.addUnit({ id: "app", template: "test" });
+UniversalAd.use(pluginUniversalAdTemplate);
 UniversalAd.freezed();
-UniversalAd.showUnit("app");
+UniversalAd.show({ id: "app", template: "test" });

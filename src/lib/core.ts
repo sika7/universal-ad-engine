@@ -1,4 +1,4 @@
-import { IUniversalAdSetting, settingManager } from "./setting-manager";
+import { RequestType } from "./api";
 import { templateManager, TPluginTemplate } from "./template-manager";
 import { WebComponentWrapper } from "./web-components-wrapper";
 
@@ -9,33 +9,37 @@ function attach(setting: IUniversalAdSetting | undefined) {
   return new WebComponentWrapper(setting.id, myClass(), setting?.api);
 }
 
+export interface IUniversalAdSetting {
+  id: string;
+  template: string;
+  api?: IUniversalAdApi;
+}
+
+interface IUniversalAdApi {
+  url: string;
+  type: RequestType;
+  data: Record<string, any>;
+}
+
 class Core {
   constructor() {
     customElements.define("universal-ad-unit", WebComponentWrapper);
   }
 
-  templates(templates: TPluginTemplate[]) {
-    for (const template of templates) {
-      templateManager.add(template);
-    }
+  use(template: TPluginTemplate) {
+    templateManager.add(template);
   }
 
   freezed() {
     templateManager.freezed();
-    settingManager.freezed();
   }
 
-  addUnit(data: IUniversalAdSetting) {
-    settingManager.add(data);
-  }
-
-  showUnit(id: string) {
+  show(data: IUniversalAdSetting) {
     try {
-      const setting = settingManager.get(id);
-      const elm = attach(setting);
+      const elm = attach(data);
       if (!elm) return;
       elm.render();
-      if (setting?.api) {
+      if (data?.api) {
         elm.pull();
       }
       new Error("no setting");
