@@ -13,18 +13,21 @@ export interface IUniversalAdApi {
 }
 
 class TemplateManager {
-  private freeze = false;
   private data: IPluginTemplate[] = [];
 
   constructor() {}
 
   freezed() {
-    this.freeze = true;
+    Object.freeze(this.data);
+    Object.freeze(this);
   }
 
   add(data: IPluginTemplate) {
-    if (this.freeze) return;
-    this.data.push(data);
+    try {
+      this.data.push(data);
+    } catch (error) {
+      throw new Error("Adding templates is currently freezed.");
+    }
   }
 
   find(name: string) {
