@@ -1,19 +1,20 @@
+import { RequestType } from "./api";
 import { IUniversalAdTemplate } from "./universal-ad-template";
 
 export interface IPluginTemplate {
   name: string;
+  api: IUniversalAdApi;
   template: () => IUniversalAdTemplate;
 }
 
-export type TPluginTemplate = () => IPluginTemplate;
-
-interface ITemplateData {
-  [name: string]: () => IUniversalAdTemplate;
+export interface IUniversalAdApi {
+  url: string;
+  type: RequestType;
 }
 
 class TemplateManager {
   private freeze = false;
-  private data: ITemplateData = {};
+  private data: IPluginTemplate[] = [];
 
   constructor() {}
 
@@ -21,14 +22,13 @@ class TemplateManager {
     this.freeze = true;
   }
 
-  add(plugin: TPluginTemplate) {
+  add(data: IPluginTemplate) {
     if (this.freeze) return;
-    const data = plugin();
-    this.data[data.name] = data.template;
+    this.data.push(data);
   }
 
-  createInstance(name: string) {
-    return this.data[name];
+  find(name: string) {
+    return this.data.find((data) => data.name === name);
   }
 }
 

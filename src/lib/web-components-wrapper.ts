@@ -1,6 +1,6 @@
-import { apiRequest } from "./api";
-import { IUniversalAdApi } from "./core";
+import { apiRequest, Parameter } from "./api";
 import { applyDom, setEvent } from "./dom";
+import { IUniversalAdApi } from "./template-manager";
 import {
   executeMethod,
   IUniversalAdTemplate,
@@ -17,6 +17,8 @@ let template: IUniversalAdTemplate | undefined;
 
 let api: IUniversalAdApi | undefined;
 
+let parameter: Parameter = {};
+
 export class WebComponentWrapper
   extends HTMLElement
   implements IWebComponentWrapper
@@ -28,12 +30,14 @@ export class WebComponentWrapper
   constructor(
     id: string,
     templateInstance: IUniversalAdTemplate,
-    apiData: IUniversalAdApi | undefined
+    apiData: IUniversalAdApi,
+    parameterData: Parameter = {}
   ) {
     super();
     this.id = id;
     template = templateInstance;
     api = apiData;
+    parameter = parameterData;
     this.shadow = this.attachShadow({ mode: "closed" });
 
     this.render();
@@ -49,7 +53,7 @@ export class WebComponentWrapper
 
   pull() {
     if (!api) return;
-    apiRequest(api.type, api.url, api?.data)
+    apiRequest(api.type, api.url, parameter)
       .then((value: any) => {
         if (!template) return;
         template.update(value);

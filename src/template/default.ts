@@ -1,3 +1,4 @@
+import { RequestType } from "../lib/api";
 import { IPluginTemplate } from "../lib/template-manager";
 import { IUniversalAdTemplate } from "../lib/universal-ad-template";
 import { TypeResponseBanner } from "../response/banner";
@@ -44,6 +45,13 @@ class UniversalAdTemplate implements IUniversalAdTemplate {
   }
 }
 
-export default function pluginUniversalAdTemplate(): IPluginTemplate {
-  return { name: "test", template: () => new UniversalAdTemplate() };
+export default function pluginUniversalAdTemplate(
+  url: string,
+  type: RequestType
+): IPluginTemplate {
+  return {
+    name: "test",
+    template: () => new UniversalAdTemplate(),
+    api: { url: url, type: type },
+  };
 }

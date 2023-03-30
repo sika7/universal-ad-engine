@@ -1,24 +1,17 @@
-import { RequestType } from "./api";
-import { templateManager, TPluginTemplate } from "./template-manager";
+import { IPluginTemplate, templateManager } from "./template-manager";
 import { WebComponentWrapper } from "./web-components-wrapper";
 
 function attach(setting: IUniversalAdSetting | undefined) {
   if (!setting) return;
-  const myClass = templateManager.createInstance(setting.template);
-  if (!myClass) throw new Error("No template registration found.");
-  return new WebComponentWrapper(setting.id, myClass(), setting?.api);
+  const data = templateManager.find(setting.template);
+  if (!data) throw new Error("No template registration found.");
+  return new WebComponentWrapper(setting.id, data.template(), data.api);
 }
 
 export interface IUniversalAdSetting {
   id: string;
   template: string;
-  api?: IUniversalAdApi;
-}
-
-export interface IUniversalAdApi {
-  url: string;
-  type: RequestType;
-  data: Record<string, any>;
+  parameter?: Record<string, any>;
 }
 
 class Core {
@@ -26,7 +19,7 @@ class Core {
     customElements.define("universal-ad-unit", WebComponentWrapper);
   }
 
-  use(template: TPluginTemplate) {
+  use(template: IPluginTemplate) {
     templateManager.add(template);
   }
 
@@ -39,7 +32,7 @@ class Core {
       const elm = attach(data);
       if (!elm) return;
       elm.render();
-      if (data?.api) {
+      if (data?.parameter) {
         elm.pull();
       }
       new Error("no setting");
