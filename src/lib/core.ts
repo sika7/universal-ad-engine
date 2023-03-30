@@ -5,7 +5,7 @@ function attach(setting: IUniversalAdSetting | undefined) {
   if (!setting) return;
   const data = templateManager.find(setting.template);
   if (!data) throw new Error("No template registration found.");
-  return new WebComponentWrapper(setting.id, data.template(), data.api);
+  return new WebComponentWrapper(setting.id, data.template(), data.api, setting.parameter);
 }
 
 export interface IUniversalAdSetting {
