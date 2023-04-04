@@ -55,7 +55,9 @@ export class WebComponentWrapper
     if (!api) return;
     apiRequest(api.type, api.url, parameter)
       .then((value: any) => {
-        if (!template) return;
+        if (!template) {
+          throw new Error("template not found.");
+        };
         template.update(value);
         this.render();
       })
