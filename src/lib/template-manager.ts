@@ -10,6 +10,7 @@ export interface IPluginTemplate {
 export interface IUniversalAdApi {
   url: string;
   type: RequestType;
+  validation: Record<string, string>;
 }
 
 class TemplateManager {

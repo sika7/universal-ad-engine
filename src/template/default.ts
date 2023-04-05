@@ -52,6 +52,15 @@ export default function pluginUniversalAdTemplate(
   return {
     name: "test",
     template: () => new UniversalAdTemplate(),
-    api: { url: url, type: type },
+    api: {
+      url: url,
+      type: type,
+      validation: {
+        url: "string|url|https",
+        img_src: "string|url|https",
+        width: "number|integer",
+        height: "number|integer",
+      },
+    },
   };
 }
