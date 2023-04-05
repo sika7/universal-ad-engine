@@ -1,17 +1,22 @@
+import { objectValidator } from "./validator";
+
 export type RequestType = "get" | "post";
 export type Parameter = Record<string, string | number | boolean>;
+export type ValidationSetting = Record<string, string>;
 
 function convertObjectToQueryParams(params: Parameter): string {
   const queryParams = Object.keys(params)
-  .map(key => {
-    const value = params[key];
-    if (value === undefined) {
-      return '';
-    }
-    return `${encodeURIComponent(key)}=${encodeURIComponent(value.toString())}`;
-  })
-  .filter(queryParam => queryParam !== '')
-  .join('&');
+    .map((key) => {
+      const value = params[key];
+      if (value === undefined) {
+        return "";
+      }
+      return `${encodeURIComponent(key)}=${encodeURIComponent(
+        value.toString()
+      )}`;
+    })
+    .filter((queryParam) => queryParam !== "")
+    .join("&");
   return `?${queryParams}`;
 }
 
@@ -35,22 +40,35 @@ async function postRequest<T>(url: string, data: Parameter = {}) {
 }
 
 async function getRequest<T>(url: string, data: Parameter = {}) {
-  const response = await fetch(setQueryParams(url, convertObjectToQueryParams(data)), {
-    method: "GET",
-    cache: "no-cache",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    referrerPolicy: "strict-origin-when-cross-origin",
-  });
+  const response = await fetch(
+    setQueryParams(url, convertObjectToQueryParams(data)),
+    {
+      method: "GET",
+      cache: "no-cache",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      referrerPolicy: "strict-origin-when-cross-origin",
+    }
+  );
   return response.json() as T;
 }
 
-export function apiRequest<T>(
+export async function apiRequest<T>(
   requestType: RequestType,
   url: string,
-  data: Parameter = {}
+  data: Parameter = {},
+  validation: ValidationSetting = {}
 ): Promise<T> {
-  if (requestType === "post") return postRequest<T>(url, data);
-  return getRequest<T>(url, data);
+  if (requestType === "post")
+    return postRequest<T>(url, data).then((value) => {
+      if (objectValidator(value, validation))
+        throw new Error("validation check error.");
+      return value as T;
+    });
+  return getRequest<T>(url, data).then((value) => {
+    if (objectValidator(value, validation))
+      throw new Error("validation check error.");
+    return value as T;
+  });
 }

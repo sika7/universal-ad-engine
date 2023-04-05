@@ -40,7 +40,7 @@ class Validator {
 
 export const validator = new Validator();
 
-function ObjectValidator(
+export function objectValidator(
   target: any,
   settings: any = {}
 ): boolean {
