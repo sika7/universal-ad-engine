@@ -55,7 +55,7 @@ class Validator {
     this.validates = validates;
   }
 
-  checkAll(target: any) {
+  private checkAll(target: any) {
     for (const validate of this.validates) {
       this.result.push(validate.result(target));
     }
@@ -86,10 +86,32 @@ class Validator {
   }
 }
 
-export function validation(validatePlugins: IValidatePlugin[]): Validator {
+export function validator(validatePlugins: IValidatePlugin[]): Validator {
   const validates: Validate[] = [];
   for (const plugin of validatePlugins) {
     validates.push(new Validate(plugin));
   }
   return new Validator(validates);
+}
+
+class Validation {
+  validates: Validate[] = [];
+  constructor(validates: Validate[]) {
+    this.validates = validates;
+  }
+
+  run(target: any) {
+    for (const validate of this.validates) {
+      if (validate.check(target)) return true;
+    }
+    return false;
+  }
+}
+
+export function validation(validatePlugins: IValidatePlugin[]): Validation {
+  const validates: Validate[] = [];
+  for (const plugin of validatePlugins) {
+    validates.push(new Validate(plugin));
+  }
+  return new Validation(validates);
 }
