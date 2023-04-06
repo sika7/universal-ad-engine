@@ -1,3 +1,5 @@
+import { getProperty } from "./utility";
+
 interface IValidatePlugin {
   name: string;
   errorMessage: string;
@@ -114,4 +116,33 @@ export function validation(validatePlugins: IValidatePlugin[]): Validation {
     validates.push(new Validate(plugin));
   }
   return new Validation(validates);
+}
+
+const isDataObject = (x: unknown): boolean =>
+  x !== null && (typeof x === "object" || typeof x !== "function");
+
+export function objectValidation(target: any, settings: any = {}): boolean {
+  for (const key of Object.keys(settings)) {
+    const targetValue = getProperty(target, key);
+    if (targetValue!) return true;
+
+    const validation = getProperty(settings, key);
+
+    if (Array.isArray(validation)) {
+      for (const data of validation) {
+        const result = objectValidation(targetValue, data);
+        if (result) return true;
+      }
+    }
+
+    if (validation instanceof Validation) {
+      if (validation.run(targetValue)) return true;
+    }
+
+    if (isDataObject(validation)) {
+      const result = objectValidation(targetValue, validation);
+      if (result) return true;
+    }
+  }
+  return false;
 }
