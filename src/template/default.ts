@@ -1,7 +1,7 @@
 import { RequestType } from "../lib/api";
 import { IPluginTemplate } from "../lib/template-manager";
 import { IUniversalAdTemplate } from "../lib/universal-ad-template";
-import { TypeResponseBanner } from "../response/banner";
+import { bannerValidation, BannerResponse } from "../response/banner";
 import * as style from "./default.css?inline";
 
 class UniversalAdTemplate implements IUniversalAdTemplate {
@@ -20,7 +20,7 @@ class UniversalAdTemplate implements IUniversalAdTemplate {
     return style.default;
   }
 
-  update(response: TypeResponseBanner) {
+  update(response: BannerResponse) {
     // ここでレスポンスデータをメンバ変数に与える
     this.url = response.url;
     this.imgSrc = response.img_src;
@@ -55,12 +55,7 @@ export default function pluginUniversalAdTemplate(
     api: {
       url: url,
       type: type,
-      validation: {
-        url: "string|url|https",
-        img_src: "string|url|https",
-        width: "number|integer",
-        height: "number|integer",
-      },
+      validation: bannerValidation,
     },
   };
 }
