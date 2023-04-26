@@ -1,3 +1,4 @@
+import { ObjectValidator } from "@sika7/validator/lib/objectValidator";
 import { apiRequest, Parameter } from "./api";
 import { applyDom, setEvent } from "./dom";
 import { IUniversalAdApi } from "./template-manager";
@@ -26,12 +27,14 @@ export class WebComponentWrapper
   id: string;
   api: IUniversalAdApi | undefined;
   shadow: ShadowRoot;
+  validator: ObjectValidator;
 
   constructor(
     id: string,
     templateInstance: IUniversalAdTemplate,
     apiData: IUniversalAdApi,
-    parameterData: Parameter = {}
+    parameterData: Parameter = {},
+    validator: ObjectValidator
   ) {
     super();
     this.id = id;
@@ -43,6 +46,8 @@ export class WebComponentWrapper
     this.render();
     applyDom(this.id, this);
 
+    this.validator = validator;
+
     Object.freeze(this);
   }
 
@@ -53,12 +58,19 @@ export class WebComponentWrapper
 
   pull() {
     if (!api) return;
-    // api?.validation
     apiRequest(api.type, api.url, parameter)
+      .then((value: any) => {
+        if (api?.validation) {
+          const result = this.validator.validation(api?.validation, value);
+          if (result)
+            throw new Error(`validation error.${result.errorMessage}`);
+        }
+        return value;
+      })
       .then((value: any) => {
         if (!template) {
           throw new Error("template not found.");
-        };
+        }
         template.update(value);
         this.render();
       })

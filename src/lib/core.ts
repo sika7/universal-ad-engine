@@ -1,7 +1,12 @@
+import { ObjectValidator } from "@sika7/validator/lib/objectValidator";
+import { IValidatePlugin } from "@sika7/validator/lib/types";
 import { IPluginTemplate, templateManager } from "./template-manager";
 import { WebComponentWrapper } from "./web-components-wrapper";
 
-function attach(setting: IUniversalAdSetting | undefined) {
+function attach(
+  setting: IUniversalAdSetting | undefined,
+  validator: ObjectValidator
+) {
   if (!setting) return;
   const data = templateManager.find(setting.template);
   if (!data) throw new Error("No template registration found.");
@@ -9,7 +14,8 @@ function attach(setting: IUniversalAdSetting | undefined) {
     setting.id,
     data.template(),
     data.api,
-    setting.parameter
+    setting.parameter,
+    validator
   );
 }
 
@@ -20,11 +26,17 @@ export interface IUniversalAdSetting {
 }
 
 class Core {
+  private validator = new ObjectValidator();
+
   constructor() {
     const name = "universal-ad-unit";
     if (!customElements.get(name)) {
       customElements.define(name, WebComponentWrapper);
     }
+  }
+
+  validation(plugin: IValidatePlugin) {
+    this.validator.use(plugin);
   }
 
   use(template: IPluginTemplate) {
@@ -37,7 +49,7 @@ class Core {
 
   show(data: IUniversalAdSetting) {
     try {
-      const elm = attach(data);
+      const elm = attach(data, this.validator);
       if (!elm) return;
       elm.render();
       if (data?.parameter) {
