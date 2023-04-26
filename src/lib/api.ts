@@ -1,4 +1,3 @@
-import { objectValidator } from "./validator";
 
 export type RequestType = "get" | "post";
 export type Parameter = Record<string, string | number | boolean>;
@@ -58,17 +57,8 @@ export async function apiRequest<T>(
   requestType: RequestType,
   url: string,
   data: Parameter = {},
-  validation: ValidationSetting = {}
 ): Promise<T> {
   if (requestType === "post")
-    return postRequest<T>(url, data).then((value) => {
-      if (objectValidator(value, validation))
-        throw new Error("validation check error.");
-      return value as T;
-    });
-  return getRequest<T>(url, data).then((value) => {
-    if (objectValidator(value, validation))
-      throw new Error("validation check error.");
-    return value as T;
-  });
+    return postRequest<T>(url, data);
+  return getRequest<T>(url, data);
 }

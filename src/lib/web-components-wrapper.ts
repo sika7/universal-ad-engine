@@ -53,7 +53,8 @@ export class WebComponentWrapper
 
   pull() {
     if (!api) return;
-    apiRequest(api.type, api.url, parameter, api?.validation)
+    // api?.validation
+    apiRequest(api.type, api.url, parameter)
       .then((value: any) => {
         if (!template) {
           throw new Error("template not found.");

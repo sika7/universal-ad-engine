@@ -1,7 +1,9 @@
 {
   "name": "universal-ad-engine",
   "type": "module",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "main": "./dist/ua.umd.cjs",
   "module": "./dist/ua.js",
   "exports": {
@@ -20,5 +22,8 @@
   "devDependencies": {
     "typescript": "^4.9.3",
     "vite": "^4.2.0"
+  },
+  "dependencies": {
+    "@sika7/validator": "^0.0.5"
   }
 }
