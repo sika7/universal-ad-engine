@@ -23,7 +23,6 @@ flowchart TD
 ## TODO
 
 - Add a docks
-- Compatible with cdn
 - Compatible with modules
 - Publish to npm
 - Add a test
