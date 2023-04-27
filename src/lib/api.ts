@@ -1,4 +1,3 @@
-
 export type RequestType = "get" | "post";
 export type Parameter = Record<string, string | number | boolean>;
 export type ValidationSetting = Record<string, string>;

@@ -1,5 +1,5 @@
 import { ObjectValidator } from "@sika7/validator/lib/objectValidator";
-import { IValidatePlugin } from "@sika7/validator/lib/types";
+import { ValidatePlugin } from "@sika7/validator/lib/types";
 import { IPluginTemplate, templateManager } from "./template-manager";
 import { WebComponentWrapper } from "./web-components-wrapper";
 
@@ -35,7 +35,7 @@ class Core {
     }
   }
 
-  validation(plugin: IValidatePlugin) {
+  validation(plugin: ValidatePlugin) {
     this.validator.use(plugin);
   }
 
