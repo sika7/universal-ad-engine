@@ -1,4 +1,4 @@
-import { render } from "./template-engine";
+import { render } from "./engine";
 import { getProperty } from "../utility";
 
 export interface IUniversalAdTemplate {
