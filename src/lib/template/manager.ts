@@ -1,5 +1,5 @@
-import { RequestType } from "./api";
-import { IUniversalAdTemplate } from "./template/universal-ad-template";
+import { RequestType } from "../api";
+import { IUniversalAdTemplate } from "./universal-ad-template";
 
 export interface IPluginTemplate {
   name: string;
