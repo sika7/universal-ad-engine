@@ -1,4 +1,9 @@
 import { ObjectValidator } from "@sika7/validator/lib/objectValidator";
+import { isHttps } from "@sika7/validator/lib/plugins/isHttps";
+import { isInteger } from "@sika7/validator/lib/plugins/isInteger";
+import { isNumber } from "@sika7/validator/lib/plugins/isNumber";
+import { isString } from "@sika7/validator/lib/plugins/isString";
+import { isUrl } from "@sika7/validator/lib/plugins/isUrl";
 import { ValidatePlugin } from "@sika7/validator/lib/types";
 import { IPluginTemplate, templateManager } from "./template-manager";
 import { WebComponentWrapper } from "./web-components-wrapper";
@@ -33,10 +38,12 @@ class Core {
     if (!customElements.get(name)) {
       customElements.define(name, WebComponentWrapper);
     }
-  }
 
-  validation(plugin: ValidatePlugin) {
-    this.validator.use(plugin);
+    this.validator.use(isNumber());
+    this.validator.use(isString());
+    this.validator.use(isHttps());
+    this.validator.use(isUrl());
+    this.validator.use(isInteger());
   }
 
   use(template: IPluginTemplate) {
