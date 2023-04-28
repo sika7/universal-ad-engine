@@ -1,5 +1,5 @@
 import { render } from "./template-engine";
-import { getProperty } from "./utility";
+import { getProperty } from "../utility";
 
 export interface IUniversalAdTemplate {
   style?(): string;
