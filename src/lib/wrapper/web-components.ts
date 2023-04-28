@@ -1,6 +1,6 @@
 import { ObjectValidator } from "@sika7/validator/lib/objectValidator";
 import { apiRequest, Parameter } from "../api";
-import { applyDom, setEvent } from "./dom";
+import { applyDom, setEvent } from "../front/dom";
 import { IUniversalAdApi } from "../template/manager";
 import {
   executeMethod,
