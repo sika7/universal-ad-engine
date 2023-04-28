@@ -14,3 +14,9 @@ UniversalAd.validation(isInteger());
 
 UniversalAd.use(pluginUniversalAdTemplate("https://localhost:8000", "get"));
 UniversalAd.freezed();
+
+UniversalAd.show({
+  id: "#app",
+  template: "test",
+  parameter: {},
+});
