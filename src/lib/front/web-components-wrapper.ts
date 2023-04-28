@@ -1,12 +1,12 @@
 import { ObjectValidator } from "@sika7/validator/lib/objectValidator";
-import { apiRequest, Parameter } from "./api";
+import { apiRequest, Parameter } from "../api";
 import { applyDom, setEvent } from "./dom";
-import { IUniversalAdApi } from "./template-manager";
+import { IUniversalAdApi } from "../template-manager";
 import {
   executeMethod,
   IUniversalAdTemplate,
   generate,
-} from "./universal-ad-template";
+} from "../universal-ad-template";
 
 interface IWebComponentWrapper {
   id: string;

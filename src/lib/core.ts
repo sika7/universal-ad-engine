@@ -4,9 +4,8 @@ import { isInteger } from "@sika7/validator/lib/plugins/isInteger";
 import { isNumber } from "@sika7/validator/lib/plugins/isNumber";
 import { isString } from "@sika7/validator/lib/plugins/isString";
 import { isUrl } from "@sika7/validator/lib/plugins/isUrl";
-import { ValidatePlugin } from "@sika7/validator/lib/types";
 import { IPluginTemplate, templateManager } from "./template-manager";
-import { WebComponentWrapper } from "./web-components-wrapper";
+import { WebComponentWrapper } from "./front/web-components-wrapper";
 
 function attach(
   setting: IUniversalAdSetting | undefined,

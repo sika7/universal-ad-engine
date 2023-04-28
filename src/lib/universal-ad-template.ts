@@ -38,22 +38,22 @@ export function generate(universalAd: IUniversalAdTemplate): string {
   `;
 }
 
-export function ssrGenerate(
-  id: string,
-  universalAd: IUniversalAdTemplate
-): string {
-  // 途中
-  const html = htmlText(universalAd);
-  const style = styleText(universalAd);
-  return `
-    <style>
-     #${id} {
-      ${style}
-     }
-    </style>
-    <script>
-      var test = {}:
-    </script>
-    ${html}
-  `;
-}
+// export function ssrGenerate(
+//   id: string,
+//   universalAd: IUniversalAdTemplate
+// ): string {
+//   // 途中
+//   const html = htmlText(universalAd);
+//   const style = styleText(universalAd);
+//   return `
+//     <style>
+//      #${id} {
+//       ${style}
+//      }
+//     </style>
+//     <script>
+//       var test = {}:
+//     </script>
+//     ${html}
+//   `;
+// }
