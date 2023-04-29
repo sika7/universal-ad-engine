@@ -1,6 +1,6 @@
 import { RequestType } from "../lib/api";
-import { IPluginTemplate } from "../lib/template-manager";
-import { IUniversalAdTemplate } from "../lib/universal-ad-template";
+import { IPluginTemplate } from "../lib/template/manager";
+import { IUniversalAdTemplate } from "../lib/template/main";
 import { bannerValidation, BannerResponse } from "../response/banner";
 import * as style from "./default.css?inline";
 
