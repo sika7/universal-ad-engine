@@ -1,5 +1,5 @@
 import { apiRequest, RequestType } from "./api";
-import { generate, IUniversalAdTemplate } from "./template/main";
+import { executeMethod, generate, IUniversalAdTemplate } from "./template/main";
 
 export class UniversalAdCore {
   template: IUniversalAdTemplate;
@@ -34,6 +34,10 @@ export class UniversalAdCore {
 
   generate() {
     return generate(this.template);
+  }
+
+  executeMethod(atter: string) {
+    executeMethod(this.template, atter);
   }
 }
 

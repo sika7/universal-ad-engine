@@ -1,12 +1,8 @@
 import { ObjectValidator } from "@sika7/validator/lib/objectValidator";
-import { apiRequest, Parameter } from "../api";
+import { Parameter } from "../api";
 import { applyDom, setEvent } from "../front/dom";
 import { IUniversalAdApi } from "../template/manager";
-import {
-  executeMethod,
-  IUniversalAdTemplate,
-  generate,
-} from "../template/main";
+import { UniversalAdCore } from "../core";
 
 interface IWebComponentWrapper {
   id: string;
@@ -14,7 +10,7 @@ interface IWebComponentWrapper {
   render(): void;
 }
 
-let template: IUniversalAdTemplate | undefined;
+let core: UniversalAdCore | undefined;
 
 let api: IUniversalAdApi | undefined;
 
@@ -31,14 +27,14 @@ export class WebComponentWrapper
 
   constructor(
     id: string,
-    templateInstance: IUniversalAdTemplate,
+    core: UniversalAdCore,
     apiData: IUniversalAdApi,
     parameterData: Parameter = {},
     validator: ObjectValidator
   ) {
     super();
     this.id = id;
-    template = templateInstance;
+    core = core;
     api = apiData;
     parameter = parameterData;
     this.shadow = this.attachShadow({ mode: "closed" });
@@ -57,26 +53,9 @@ export class WebComponentWrapper
   renderedCallback() {}
 
   pull() {
-    if (!api) return;
-    apiRequest(api.type, api.url, parameter)
-      .then((value: any) => {
-        if (api?.validation) {
-          const result = this.validator.validation(api?.validation, value);
-          if (result)
-            throw new Error(`validation error.${result.errorMessage}`);
-        }
-        return value;
-      })
-      .then((value: any) => {
-        if (!template) {
-          throw new Error("template not found.");
-        }
-        template.update(value);
-        this.render();
-      })
-      .catch(() => {
-        // throw new Error("API request failed.");
-      });
+    if (core && api) {
+      core.pull(api.url, api.type, parameter);
+    }
   }
 
   hide(second: number = 30) {
@@ -89,15 +68,15 @@ export class WebComponentWrapper
   }
 
   render() {
-    if (!template) return;
-    this.shadow.innerHTML = generate(template);
+    if (!core) return;
+    this.shadow.innerHTML = core.generate();
     this.setClickEvent();
   }
 
   setClickEvent() {
     setEvent(this.shadow, "c", "click", (atter: string) => {
-      if (!template) return;
-      executeMethod(template, atter);
+      if (!core) return;
+      core.executeMethod(atter);
       this.render();
     });
   }
