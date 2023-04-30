@@ -1,6 +1,8 @@
-import { apiRequest, RequiredApiSetting } from "./api";
+import { apiRequest, ApiSetting } from "./api";
 import { Common } from "./common";
 import { executeMethod, generate, Template } from "./template/main";
+
+type CoreApiSetting = Required<ApiSetting>;
 
 export class UniversalAdCore {
   template: Template;
@@ -13,7 +15,7 @@ export class UniversalAdCore {
     Object.freeze(this);
   }
 
-  async pull(apiSetting: RequiredApiSetting) {
+  async pull(apiSetting: CoreApiSetting) {
     const { url, type, parameter, validation } = apiSetting;
     return apiRequest(type, url, parameter)
       .then((value: any) => {

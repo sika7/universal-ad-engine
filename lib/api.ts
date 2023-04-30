@@ -67,6 +67,3 @@ export type ApiSetting = {
   parameter?: Record<string, string | number | boolean>;
   validation?: Record<string, string>;
 };
-
-
-export type RequiredApiSetting = Required<ApiSetting>;
