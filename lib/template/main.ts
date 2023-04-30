@@ -8,27 +8,27 @@ export interface Template {
 }
 
 export function executeMethod(
-  universalAd: Template,
+  template: Template,
   propertyPath: string
 ): any {
-  const func = getProperty(universalAd, propertyPath.replace(/\(\)/g, ""));
+  const func = getProperty(template, propertyPath.replace(/\(\)/g, ""));
   if (!func) return "";
-  return func.call(universalAd);
+  return func.call(template);
 }
 
-export function htmlText(universalAd: Template) {
-  return render(universalAd.render(), universalAd);
+export function htmlText(template: Template) {
+  return render(template.render(), template);
 }
 
-export function styleText(universalAd: Template): string {
-  const func = getProperty(universalAd, "style");
+export function styleText(template: Template): string {
+  const func = getProperty(template, "style");
   if (!func) return "";
   return func();
 }
 
-export function generate(universalAd: Template): string {
-  const html = htmlText(universalAd);
-  const style = styleText(universalAd);
+export function generate(template: Template): string {
+  const html = htmlText(template);
+  const style = styleText(template);
 
   return `
     <style>
