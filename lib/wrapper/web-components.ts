@@ -1,36 +1,27 @@
 import { Parameter } from "../api";
 import { applyDom, setEvent } from "./front/dom";
 import { UniversalAdCore } from "../core";
-import { Common } from "../common";
-import { ApiSetting } from "../template/plugin";
 
 export type WebComponentWrapperOption = {
   id: string;
   core: UniversalAdCore;
-  apiData: ApiSetting;
-  common: Common;
 };
 
 let core: UniversalAdCore | undefined;
-let api: ApiSetting | undefined;
 
 export class WebComponentWrapper extends HTMLElement {
   id: string;
   shadow: ShadowRoot;
-  common: Common;
 
-  constructor({ id, core, apiData, common }: WebComponentWrapperOption) {
+  constructor({ id, core }: WebComponentWrapperOption) {
     super();
     this.id = id;
     core = core;
-    api = apiData;
 
     this.shadow = this.attachShadow({ mode: "closed" });
 
     this.render();
     applyDom(this.id, this);
-
-    this.common = common;
 
     Object.freeze(this);
   }
@@ -41,13 +32,8 @@ export class WebComponentWrapper extends HTMLElement {
   renderedCallback() {}
 
   pull(parameter: Parameter) {
-    if (core && api) {
-      core.pull({
-        url: api.url,
-        type: api.type,
-        parameter: parameter,
-        validation: api.validation,
-      });
+    if (core) {
+      core.pull(parameter);
     }
   }
 

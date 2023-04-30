@@ -1,22 +1,26 @@
-import { apiRequest, ApiSetting } from "./api";
+import { apiRequest, ApiSetting, Parameter } from "./api";
 import { Common } from "./common";
 import { executeMethod, generate, Template } from "./template/main";
-
-type CoreApiSetting = Required<ApiSetting>;
 
 export class UniversalAdCore {
   template: Template;
   common: Common;
+  apiSetting: ApiSetting;
 
-  constructor(data: { common: Common; template: Template }) {
-    const { common, template } = data;
+  constructor(data: {
+    common: Common;
+    template: Template;
+    apiSetting: ApiSetting;
+  }) {
+    const { common, template, apiSetting } = data;
     this.template = template;
     this.common = common;
+    this.apiSetting = apiSetting;
     Object.freeze(this);
   }
 
-  async pull(apiSetting: CoreApiSetting) {
-    const { url, type, parameter, validation } = apiSetting;
+  async pull(parameter: Parameter = {}) {
+    const { url, type, validation } = this.apiSetting;
     return apiRequest(type, url, parameter)
       .then((value: any) => {
         const { validator } = this.common;

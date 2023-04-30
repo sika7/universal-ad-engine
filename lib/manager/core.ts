@@ -21,9 +21,8 @@ function attach(
     core: new UniversalAdCore({
       common: common,
       template: template.template(),
+      apiSetting: template.api,
     }),
-    apiData: template.api,
-    common: common,
   });
 }
 

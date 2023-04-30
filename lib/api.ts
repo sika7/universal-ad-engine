@@ -64,6 +64,5 @@ export async function apiRequest<T>(
 export type ApiSetting = {
   url: string;
   type: RequestType;
-  parameter?: Record<string, string | number | boolean>;
-  validation?: Record<string, string>;
+  validation: Record<string, string>;
 };
