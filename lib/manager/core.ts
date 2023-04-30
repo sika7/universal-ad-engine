@@ -1,4 +1,11 @@
-import { isHttps, isInteger, isNumber, isString, isUrl, ObjectValidator } from "@sika7/validator";
+import {
+  isHttps,
+  isInteger,
+  isNumber,
+  isString,
+  isUrl,
+  ObjectValidator,
+} from "@sika7/validator";
 import { Common, common } from "../common";
 import { UniversalAdCore } from "../core";
 import { Plugin } from "../template/plugin";
