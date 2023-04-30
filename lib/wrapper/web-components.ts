@@ -1,5 +1,5 @@
 import { Parameter } from "../api";
-import { applyDom, setEvent } from "../front/dom";
+import { applyDom, setEvent } from "./front/dom";
 import { IUniversalAdApi } from "../template/manager";
 import { UniversalAdCore } from "../core";
 import { Common } from "../common";
