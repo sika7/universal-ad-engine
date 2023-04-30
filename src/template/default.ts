@@ -50,7 +50,6 @@ export default function pluginUniversalAdTemplate(
   type: RequestType
 ): IPluginTemplate {
   return {
-    name: "test",
     template: () => new UniversalAdTemplate(),
     api: {
       url: url,

@@ -6,28 +6,53 @@ import { isString } from "@sika7/validator/lib/plugins/isString";
 import { isUrl } from "@sika7/validator/lib/plugins/isUrl";
 import { Common, common } from "../common";
 import { UniversalAdCore } from "../core";
-import { IPluginTemplate, templateManager } from "../template/manager";
+import { IPluginTemplate } from "../template/manager";
 import { WebComponentWrapper } from "../wrapper/web-components";
 
-function attach(setting: IUniversalAdSetting | undefined, common: Common) {
+function attach(
+  setting: IUniversalAdSetting | undefined,
+  template: IPluginTemplate,
+  common: Common
+) {
   if (!setting) return;
-  const data = templateManager.find(setting.template);
-  if (!data) throw new Error("No template registration found.");
+  if (!template) throw new Error("No template registration found.");
   return new WebComponentWrapper({
     id: setting.id,
     core: new UniversalAdCore({
       common: common,
-      template: data.template(),
+      template: template.template(),
     }),
-    apiData: data.api,
+    apiData: template.api,
     common: common,
   });
 }
 
 export interface IUniversalAdSetting {
   id: string;
-  template: string;
   parameter?: Record<string, any>;
+}
+
+class PluginController {
+  private template: IPluginTemplate;
+  private common: Common;
+  constructor(param: { common: Common; template: IPluginTemplate }) {
+    this.template = param.template;
+    this.common = param.common;
+  }
+
+  attach(data: IUniversalAdSetting) {
+    try {
+      const elm = attach(data, this.template, this.common);
+      if (!elm) return;
+      elm.render();
+      if (data?.parameter) {
+        elm.pull(data?.parameter);
+      }
+      new Error("no setting");
+    } catch (error) {
+      throw new Error("An error has occurred.");
+    }
+  }
 }
 
 class Core {
@@ -52,31 +77,16 @@ class Core {
         if (result) return true;
         return false;
       },
-      log: ({message}) => console.log(message),
-      debug: ({message}) => console.log(message),
+      log: ({ message }) => console.log(message),
+      debug: ({ message }) => console.log(message),
     });
   }
 
-  use(template: IPluginTemplate) {
-    templateManager.add(template);
-  }
-
-  freezed() {
-    templateManager.freezed();
-  }
-
-  show(data: IUniversalAdSetting) {
-    try {
-      const elm = attach(data, this.common);
-      if (!elm) return;
-      elm.render();
-      if (data?.parameter) {
-        elm.pull(data?.parameter);
-      }
-      new Error("no setting");
-    } catch (error) {
-      throw new Error("An error has occurred.");
-    }
+  make(template: IPluginTemplate) {
+    return new PluginController({
+      common: this.common,
+      template,
+    });
   }
 }
 

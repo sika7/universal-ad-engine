@@ -2,7 +2,6 @@ import { RequestType } from "../api";
 import { IUniversalAdTemplate } from "./main";
 
 export interface IPluginTemplate {
-  name: string;
   api: IUniversalAdApi;
   template: () => IUniversalAdTemplate;
 }
@@ -14,7 +13,7 @@ export interface IUniversalAdApi {
 }
 
 class TemplateManager {
-  private data: IPluginTemplate[] = [];
+  private data: Record<string, IPluginTemplate> = {};
 
   constructor() {}
 
@@ -23,16 +22,16 @@ class TemplateManager {
     Object.freeze(this);
   }
 
-  add(data: IPluginTemplate) {
+  add(name: string, data: IPluginTemplate) {
     try {
-      this.data.push(data);
+      this.data[name] = data;
     } catch (error) {
       throw new Error("Adding templates is currently freezed.");
     }
   }
 
   find(name: string) {
-    return this.data.find((data) => data.name === name);
+    return this.data[name];
   }
 }
 
