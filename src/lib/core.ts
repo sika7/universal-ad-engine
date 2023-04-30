@@ -1,31 +1,32 @@
 import { apiRequest, RequiredApiSetting } from "./api";
+import { Common } from "./common";
 import { executeMethod, generate, IUniversalAdTemplate } from "./template/main";
 
 export class UniversalAdCore {
   template: IUniversalAdTemplate;
+  common: Common;
 
-  constructor(template: IUniversalAdTemplate) {
+  constructor(data: { common: Common; template: IUniversalAdTemplate }) {
+    const { common, template } = data;
     this.template = template;
+    this.common = common;
     Object.freeze(this);
   }
 
   async pull(apiSetting: RequiredApiSetting) {
-    const { url, type, parameter } = apiSetting;
+    const { url, type, parameter, validation } = apiSetting;
     return apiRequest(type, url, parameter)
       .then((value: any) => {
-        // const result = this.validator.validation(validation, value);
-        // if (result)
-        //   throw new Error(`validation error.${result.errorMessage}`);
+        const { validator } = this.common;
+        if (validator(validation, value)) throw new Error(`validation error.`);
         return value;
       })
       .then((value: any) => {
-        if (!this.template) {
-          throw new Error("template not found.");
-        }
         this.template.update(value);
       })
       .catch(() => {
-        // throw new Error("API request failed.");
+        const { log } = this.common;
+        log({ message: "API request failed.", type: "critical" });
       });
   }
 

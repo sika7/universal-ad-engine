@@ -1,8 +1,8 @@
-import { ObjectValidator } from "@sika7/validator/lib/objectValidator";
 import { Parameter } from "../api";
 import { applyDom, setEvent } from "../front/dom";
 import { IUniversalAdApi } from "../template/manager";
 import { UniversalAdCore } from "../core";
+import { Common } from "../common";
 
 interface IWebComponentWrapper {
   id: string;
@@ -13,7 +13,7 @@ export type WebComponentWrapperOption = {
   id: string;
   core: UniversalAdCore;
   apiData: IUniversalAdApi;
-  validator: ObjectValidator;
+  common: Common;
 };
 
 let core: UniversalAdCore | undefined;
@@ -25,9 +25,9 @@ export class WebComponentWrapper
 {
   id: string;
   shadow: ShadowRoot;
-  validator: ObjectValidator;
+  common: Common;
 
-  constructor({ id, core, apiData, validator }: WebComponentWrapperOption) {
+  constructor({ id, core, apiData, common }: WebComponentWrapperOption) {
     super();
     this.id = id;
     core = core;
@@ -38,7 +38,7 @@ export class WebComponentWrapper
     this.render();
     applyDom(this.id, this);
 
-    this.validator = validator;
+    this.common = common;
 
     Object.freeze(this);
   }
