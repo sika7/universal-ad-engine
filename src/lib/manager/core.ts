@@ -6,12 +6,12 @@ import { isString } from "@sika7/validator/lib/plugins/isString";
 import { isUrl } from "@sika7/validator/lib/plugins/isUrl";
 import { Common, common } from "../common";
 import { UniversalAdCore } from "../core";
-import { IPluginTemplate } from "../template/manager";
+import { Plugin } from "../template/manager";
 import { WebComponentWrapper } from "../wrapper/web-components";
 
 function attach(
   setting: IUniversalAdSetting | undefined,
-  template: IPluginTemplate,
+  template: Plugin,
   common: Common
 ) {
   if (!setting) return;
@@ -33,9 +33,9 @@ export interface IUniversalAdSetting {
 }
 
 class PluginController {
-  private template: IPluginTemplate;
+  private template: Plugin;
   private common: Common;
-  constructor(param: { common: Common; template: IPluginTemplate }) {
+  constructor(param: { common: Common; template: Plugin }) {
     this.template = param.template;
     this.common = param.common;
   }
@@ -82,7 +82,7 @@ class Core {
     });
   }
 
-  make(template: IPluginTemplate) {
+  make(template: Plugin) {
     return new PluginController({
       common: this.common,
       template,

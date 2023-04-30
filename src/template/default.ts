@@ -1,6 +1,6 @@
 import { RequestType } from "../lib/api";
-import { IPluginTemplate } from "../lib/template/manager";
 import { IUniversalAdTemplate } from "../lib/template/main";
+import { Plugin } from "../lib/template/manager";
 import { bannerValidation, BannerResponse } from "../response/banner";
 import * as style from "./default.css?inline";
 
@@ -48,7 +48,7 @@ class UniversalAdTemplate implements IUniversalAdTemplate {
 export default function pluginUniversalAdTemplate(
   url: string,
   type: RequestType
-): IPluginTemplate {
+): Plugin {
   return {
     template: () => new UniversalAdTemplate(),
     api: {

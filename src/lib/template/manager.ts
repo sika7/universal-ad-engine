@@ -1,7 +1,7 @@
 import { RequestType } from "../api";
 import { IUniversalAdTemplate } from "./main";
 
-export interface IPluginTemplate {
+export interface Plugin {
   api: IUniversalAdApi;
   template: () => IUniversalAdTemplate;
 }
@@ -13,7 +13,7 @@ export interface IUniversalAdApi {
 }
 
 class TemplateManager {
-  private data: Record<string, IPluginTemplate> = {};
+  private data: Record<string, Plugin> = {};
 
   constructor() {}
 
@@ -22,7 +22,7 @@ class TemplateManager {
     Object.freeze(this);
   }
 
-  add(name: string, data: IPluginTemplate) {
+  add(name: string, data: Plugin) {
     try {
       this.data[name] = data;
     } catch (error) {
