@@ -9,13 +9,12 @@ import { UniversalAdCore } from "../core";
 import { Plugin } from "../template/plugin";
 import { WebComponentWrapper } from "../wrapper/web-components";
 
-function attach(
-  setting: IUniversalAdSetting | undefined,
-  template: Plugin,
-  common: Common
-) {
-  if (!setting) return;
-  if (!template) throw new Error("No template registration found.");
+export interface Setting {
+  id: string;
+  parameter?: Record<string, any>;
+}
+
+function attach(setting: Setting, template: Plugin, common: Common) {
   return new WebComponentWrapper({
     id: setting.id,
     core: new UniversalAdCore({
@@ -26,11 +25,6 @@ function attach(
   });
 }
 
-export interface IUniversalAdSetting {
-  id: string;
-  parameter?: Record<string, any>;
-}
-
 class PluginController {
   private template: Plugin;
   private common: Common;
@@ -39,7 +33,7 @@ class PluginController {
     this.common = param.common;
   }
 
-  attach(data: IUniversalAdSetting) {
+  attach(data: Setting) {
     try {
       const elm = attach(data, this.template, this.common);
       if (!elm) return;
