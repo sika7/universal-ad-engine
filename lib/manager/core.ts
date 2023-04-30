@@ -25,17 +25,17 @@ function attach(setting: Setting, template: Plugin, common: Common) {
   });
 }
 
-function show({
+export function makeUnit({
   setting,
-  pulgin,
+  plugin,
   common,
 }: {
   setting: Setting;
-  pulgin: Plugin;
+  plugin: Plugin;
   common: Common;
 }) {
   try {
-    const elm = attach(setting, pulgin, common);
+    const elm = attach(setting, plugin, common);
     if (!elm) return;
     elm.render();
     if (setting?.parameter) {
@@ -48,15 +48,15 @@ function show({
 }
 
 class PluginController {
-  private template: Plugin;
+  private plugin: Plugin;
   private common: Common;
-  constructor(param: { common: Common; template: Plugin }) {
-    this.template = param.template;
+  constructor(param: { common: Common; plugin: Plugin }) {
+    this.plugin = param.plugin;
     this.common = param.common;
   }
 
   attach(setting: Setting) {
-    show({ setting, pulgin: this.template, common: this.common});
+    makeUnit({ setting, plugin: this.plugin, common: this.common });
   }
 }
 
@@ -90,7 +90,7 @@ class Core {
   make(template: Plugin) {
     return new PluginController({
       common: this.common,
-      template,
+      plugin: template,
     });
   }
 }
