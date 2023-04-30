@@ -4,11 +4,6 @@ import { IUniversalAdApi } from "../template/manager";
 import { UniversalAdCore } from "../core";
 import { Common } from "../common";
 
-interface IWebComponentWrapper {
-  id: string;
-  render(): void;
-}
-
 export type WebComponentWrapperOption = {
   id: string;
   core: UniversalAdCore;
@@ -19,10 +14,7 @@ export type WebComponentWrapperOption = {
 let core: UniversalAdCore | undefined;
 let api: IUniversalAdApi | undefined;
 
-export class WebComponentWrapper
-  extends HTMLElement
-  implements IWebComponentWrapper
-{
+export class WebComponentWrapper extends HTMLElement {
   id: string;
   shadow: ShadowRoot;
   common: Common;
