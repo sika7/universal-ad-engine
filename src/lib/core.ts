@@ -1,4 +1,4 @@
-import { apiRequest, RequestType } from "./api";
+import { apiRequest, RequiredApiSetting } from "./api";
 import { executeMethod, generate, IUniversalAdTemplate } from "./template/main";
 
 export class UniversalAdCore {
@@ -6,17 +6,14 @@ export class UniversalAdCore {
 
   constructor(template: IUniversalAdTemplate) {
     this.template = template;
+    Object.freeze(this);
   }
 
-  async pull(
-    url: string,
-    type: RequestType,
-    parameter: Record<string, string | number | boolean>
-    // validation: Record<string, string>
-  ) {
+  async pull(apiSetting: RequiredApiSetting) {
+    const { url, type, parameter } = apiSetting;
     return apiRequest(type, url, parameter)
       .then((value: any) => {
-        // const result = this.validator.validation(api?.validation, value);
+        // const result = this.validator.validation(validation, value);
         // if (result)
         //   throw new Error(`validation error.${result.errorMessage}`);
         return value;

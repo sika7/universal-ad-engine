@@ -10,11 +10,15 @@ interface IWebComponentWrapper {
   render(): void;
 }
 
+export type WebComponentWrapperOption = {
+  id: string;
+  core: UniversalAdCore;
+  apiData: IUniversalAdApi;
+  validator: ObjectValidator;
+};
+
 let core: UniversalAdCore | undefined;
-
 let api: IUniversalAdApi | undefined;
-
-let parameter: Parameter = {};
 
 export class WebComponentWrapper
   extends HTMLElement
@@ -25,18 +29,12 @@ export class WebComponentWrapper
   shadow: ShadowRoot;
   validator: ObjectValidator;
 
-  constructor(
-    id: string,
-    core: UniversalAdCore,
-    apiData: IUniversalAdApi,
-    parameterData: Parameter = {},
-    validator: ObjectValidator
-  ) {
+  constructor({ id, core, apiData, validator }: WebComponentWrapperOption) {
     super();
     this.id = id;
     core = core;
     api = apiData;
-    parameter = parameterData;
+
     this.shadow = this.attachShadow({ mode: "closed" });
 
     this.render();
@@ -52,9 +50,14 @@ export class WebComponentWrapper
   }
   renderedCallback() {}
 
-  pull() {
+  pull(parameter: Parameter) {
     if (core && api) {
-      core.pull(api.url, api.type, parameter);
+      core.pull({
+        url: api.url,
+        type: api.type,
+        parameter: parameter,
+        validation: api.validation,
+      });
     }
   }
 

@@ -55,9 +55,18 @@ async function getRequest<T>(url: string, data: Parameter = {}) {
 export async function apiRequest<T>(
   requestType: RequestType,
   url: string,
-  data: Parameter = {},
+  data: Parameter = {}
 ): Promise<T> {
-  if (requestType === "post")
-    return postRequest<T>(url, data);
+  if (requestType === "post") return postRequest<T>(url, data);
   return getRequest<T>(url, data);
 }
+
+export type ApiSetting = {
+  url: string;
+  type: RequestType;
+  parameter?: Record<string, string | number | boolean>;
+  validation?: Record<string, string>;
+};
+
+
+export type RequiredApiSetting = Required<ApiSetting>;

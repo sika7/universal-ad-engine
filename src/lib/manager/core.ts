@@ -4,6 +4,7 @@ import { isInteger } from "@sika7/validator/lib/plugins/isInteger";
 import { isNumber } from "@sika7/validator/lib/plugins/isNumber";
 import { isString } from "@sika7/validator/lib/plugins/isString";
 import { isUrl } from "@sika7/validator/lib/plugins/isUrl";
+import { UniversalAdCore } from "../core";
 import { IPluginTemplate, templateManager } from "../template/manager";
 import { WebComponentWrapper } from "../wrapper/web-components";
 
@@ -14,13 +15,12 @@ function attach(
   if (!setting) return;
   const data = templateManager.find(setting.template);
   if (!data) throw new Error("No template registration found.");
-  return new WebComponentWrapper(
-    setting.id,
-    data.template(),
-    data.api,
-    setting.parameter,
-    validator
-  );
+  return new WebComponentWrapper({
+    id: setting.id,
+    core: new UniversalAdCore(data.template()),
+    apiData: data.api,
+    validator: validator,
+  });
 }
 
 export interface IUniversalAdSetting {
