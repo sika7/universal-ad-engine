@@ -6,7 +6,7 @@ import { isString } from "@sika7/validator/lib/plugins/isString";
 import { isUrl } from "@sika7/validator/lib/plugins/isUrl";
 import { Common, common } from "../common";
 import { UniversalAdCore } from "../core";
-import { Plugin } from "../template/manager";
+import { Plugin } from "../template/plugin";
 import { WebComponentWrapper } from "../wrapper/web-components";
 
 function attach(

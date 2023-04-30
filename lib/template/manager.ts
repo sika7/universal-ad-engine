@@ -1,16 +1,4 @@
-import { RequestType } from "../api";
-import { IUniversalAdTemplate } from "./main";
-
-export interface Plugin {
-  api: IUniversalAdApi;
-  template: () => IUniversalAdTemplate;
-}
-
-export interface IUniversalAdApi {
-  url: string;
-  type: RequestType;
-  validation: Record<string, string>;
-}
+import { Plugin } from "./plugin";
 
 class TemplateManager {
   private data: Record<string, Plugin> = {};

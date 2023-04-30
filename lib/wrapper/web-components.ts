@@ -1,18 +1,18 @@
 import { Parameter } from "../api";
 import { applyDom, setEvent } from "./front/dom";
-import { IUniversalAdApi } from "../template/manager";
 import { UniversalAdCore } from "../core";
 import { Common } from "../common";
+import { ApiSetting } from "../template/plugin";
 
 export type WebComponentWrapperOption = {
   id: string;
   core: UniversalAdCore;
-  apiData: IUniversalAdApi;
+  apiData: ApiSetting;
   common: Common;
 };
 
 let core: UniversalAdCore | undefined;
-let api: IUniversalAdApi | undefined;
+let api: ApiSetting | undefined;
 
 export class WebComponentWrapper extends HTMLElement {
   id: string;
