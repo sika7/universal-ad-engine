@@ -25,6 +25,28 @@ function attach(setting: Setting, template: Plugin, common: Common) {
   });
 }
 
+function show({
+  setting,
+  pulgin,
+  common,
+}: {
+  setting: Setting;
+  pulgin: Plugin;
+  common: Common;
+}) {
+  try {
+    const elm = attach(setting, pulgin, common);
+    if (!elm) return;
+    elm.render();
+    if (setting?.parameter) {
+      elm.pull(setting?.parameter);
+    }
+    return elm;
+  } catch (error) {
+    throw new Error("An error has occurred.");
+  }
+}
+
 class PluginController {
   private template: Plugin;
   private common: Common;
@@ -33,18 +55,8 @@ class PluginController {
     this.common = param.common;
   }
 
-  attach(data: Setting) {
-    try {
-      const elm = attach(data, this.template, this.common);
-      if (!elm) return;
-      elm.render();
-      if (data?.parameter) {
-        elm.pull(data?.parameter);
-      }
-      new Error("no setting");
-    } catch (error) {
-      throw new Error("An error has occurred.");
-    }
+  attach(setting: Setting) {
+    show({ setting, pulgin: this.template, common: this.common});
   }
 }
 
