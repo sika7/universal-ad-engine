@@ -59,7 +59,7 @@ class Core {
       if (!elm) return;
       elm.render();
       if (data?.parameter) {
-        elm.pull();
+        elm.pull(data?.parameter);
       }
       new Error("no setting");
     } catch (error) {
