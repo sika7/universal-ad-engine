@@ -2,7 +2,7 @@
 
 Templates are created with classes.
 
-Please implement `IUniversalAdTemplate` in this class.
+Please implement `Template` in this class.
 
 ## Syntax
 
@@ -13,7 +13,7 @@ Currently, SCSS is not supported.
 Please use compiled CSS.
 
 ```TS
-class Example implements IUniversalAdTemplate {
+class Example implements Template {
 
   // option style method
   style(): string {
@@ -43,7 +43,7 @@ Methods can also be executed.
 Within a method, you can access class member variables using `this`.
 
 ```TS
-class Example implements IUniversalAdTemplate {
+class Example implements Template {
 
   url = "https://github.com/sika7/universal-ad-engine";
   imgUrl = "https://placehold.jp/3d4070/ffffff/300x300.png?text=%E5%BA%83%E5%91%8A";
@@ -71,7 +71,7 @@ You can set a click event in the render function.
 Specify a method inside the class.
 
 ```TS
-class Example implements IUniversalAdTemplate {
+class Example implements Template {
 
   link() {
     location.href = this.url;

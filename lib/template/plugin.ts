@@ -1,5 +1,5 @@
 import { RequestType } from "../api";
-import { IUniversalAdTemplate } from "./main";
+import { Template } from "./main";
 
 export interface ApiSetting {
   url: string;
@@ -9,5 +9,5 @@ export interface ApiSetting {
 
 export interface Plugin {
   api: ApiSetting;
-  template: () => IUniversalAdTemplate;
+  template: () => Template;
 }

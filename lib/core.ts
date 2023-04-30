@@ -1,12 +1,12 @@
 import { apiRequest, RequiredApiSetting } from "./api";
 import { Common } from "./common";
-import { executeMethod, generate, IUniversalAdTemplate } from "./template/main";
+import { executeMethod, generate, Template } from "./template/main";
 
 export class UniversalAdCore {
-  template: IUniversalAdTemplate;
+  template: Template;
   common: Common;
 
-  constructor(data: { common: Common; template: IUniversalAdTemplate }) {
+  constructor(data: { common: Common; template: Template }) {
     const { common, template } = data;
     this.template = template;
     this.common = common;

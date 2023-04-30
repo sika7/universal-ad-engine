@@ -1,14 +1,14 @@
 import { render } from "./engine";
 import { getProperty } from "../utility";
 
-export interface IUniversalAdTemplate {
+export interface Template {
   style?(): string;
   update(response: any): void;
   render(): string;
 }
 
 export function executeMethod(
-  universalAd: IUniversalAdTemplate,
+  universalAd: Template,
   propertyPath: string
 ): any {
   const func = getProperty(universalAd, propertyPath.replace(/\(\)/g, ""));
@@ -16,17 +16,17 @@ export function executeMethod(
   return func.call(universalAd);
 }
 
-export function htmlText(universalAd: IUniversalAdTemplate) {
+export function htmlText(universalAd: Template) {
   return render(universalAd.render(), universalAd);
 }
 
-export function styleText(universalAd: IUniversalAdTemplate): string {
+export function styleText(universalAd: Template): string {
   const func = getProperty(universalAd, "style");
   if (!func) return "";
   return func();
 }
 
-export function generate(universalAd: IUniversalAdTemplate): string {
+export function generate(universalAd: Template): string {
   const html = htmlText(universalAd);
   const style = styleText(universalAd);
 

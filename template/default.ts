@@ -1,10 +1,10 @@
 import { RequestType } from "../lib/api";
-import { IUniversalAdTemplate } from "../lib/template/main";
-import { Plugin } from "../lib/template/manager";
+import { Template } from "../lib/template/main";
+import { Plugin } from "../lib/template/plugin";
 import { bannerValidation, BannerResponse } from "../response/banner";
 import * as style from "./default.css?inline";
 
-class UniversalAdTemplate implements IUniversalAdTemplate {
+class UniversalAdTemplate implements Template {
   constructor() {}
 
   url = "https://github.com/sika7/universal-ad-engine";
