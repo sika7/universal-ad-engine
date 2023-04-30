@@ -7,7 +7,7 @@ export type WebComponentWrapperOption = {
   core: UniversalAdCore;
 };
 
-let core: UniversalAdCore | undefined;
+let coreInstance: UniversalAdCore | undefined;
 
 export class WebComponentWrapper extends HTMLElement {
   id: string;
@@ -16,7 +16,7 @@ export class WebComponentWrapper extends HTMLElement {
   constructor({ id, core }: WebComponentWrapperOption) {
     super();
     this.id = id;
-    core = core;
+    coreInstance = core;
 
     this.shadow = this.attachShadow({ mode: "closed" });
 
@@ -32,9 +32,8 @@ export class WebComponentWrapper extends HTMLElement {
   renderedCallback() {}
 
   pull(parameter: Parameter) {
-    if (core) {
-      core.pull(parameter);
-    }
+    if (!coreInstance) return;
+    coreInstance.pull(parameter);
   }
 
   hide(second: number = 30) {
@@ -47,15 +46,15 @@ export class WebComponentWrapper extends HTMLElement {
   }
 
   render() {
-    if (!core) return;
-    this.shadow.innerHTML = core.generate();
+    if (!coreInstance) return;
+    this.shadow.innerHTML = coreInstance.generate();
     this.setClickEvent();
   }
 
   setClickEvent() {
     setEvent(this.shadow, "c", "click", (atter: string) => {
-      if (!core) return;
-      core.executeMethod(atter);
+      if (!coreInstance) return;
+      coreInstance.executeMethod(atter);
       this.render();
     });
   }

@@ -1,9 +1,9 @@
-import { ObjectValidator } from "@sika7/validator/lib/objectValidator";
-import { isHttps } from "@sika7/validator/lib/plugins/isHttps";
-import { isInteger } from "@sika7/validator/lib/plugins/isInteger";
-import { isNumber } from "@sika7/validator/lib/plugins/isNumber";
-import { isString } from "@sika7/validator/lib/plugins/isString";
-import { isUrl } from "@sika7/validator/lib/plugins/isUrl";
+// import { ObjectValidator } from "@sika7/validator/lib/objectValidator";
+// import { isHttps } from "@sika7/validator/lib/plugins/isHttps";
+// import { isInteger } from "@sika7/validator/lib/plugins/isInteger";
+// import { isNumber } from "@sika7/validator/lib/plugins/isNumber";
+// import { isString } from "@sika7/validator/lib/plugins/isString";
+// import { isUrl } from "@sika7/validator/lib/plugins/isUrl";
 import { Common, common } from "../common";
 import { UniversalAdCore } from "../core";
 import { Plugin } from "../template/plugin";
@@ -61,7 +61,7 @@ class PluginController {
 }
 
 class Core {
-  private validator = new ObjectValidator();
+  // private validator = new ObjectValidator();
   private common: Common;
 
   constructor() {
@@ -70,16 +70,16 @@ class Core {
       customElements.define(name, WebComponentWrapper);
     }
 
-    this.validator.use(isNumber());
-    this.validator.use(isString());
-    this.validator.use(isHttps());
-    this.validator.use(isUrl());
-    this.validator.use(isInteger());
+    // this.validator.use(isNumber());
+    // this.validator.use(isString());
+    // this.validator.use(isHttps());
+    // this.validator.use(isUrl());
+    // this.validator.use(isInteger());
 
     this.common = common({
       validator: (setting, value) => {
-        const result = this.validator.validation(setting, value);
-        if (result) return true;
+        // const result = this.validator.validation(setting, value);
+        // if (result) return true;
         return false;
       },
       log: ({ message }) => console.log(message),
