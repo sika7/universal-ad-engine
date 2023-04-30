@@ -6,7 +6,6 @@ import { UniversalAdCore } from "../core";
 
 interface IWebComponentWrapper {
   id: string;
-  api: IUniversalAdApi | undefined;
   render(): void;
 }
 
@@ -25,7 +24,6 @@ export class WebComponentWrapper
   implements IWebComponentWrapper
 {
   id: string;
-  api: IUniversalAdApi | undefined;
   shadow: ShadowRoot;
   validator: ObjectValidator;
 
