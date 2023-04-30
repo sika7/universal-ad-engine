@@ -52,6 +52,8 @@ class Core {
         if (result) return true;
         return false;
       },
+      log: ({message}) => console.log(message),
+      debug: ({message}) => console.log(message),
     });
   }
 
