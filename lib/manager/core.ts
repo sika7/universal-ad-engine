@@ -12,12 +12,12 @@ import { Plugin } from "../template/plugin";
 import { WebComponentWrapper } from "../wrapper/web-components";
 
 type Unit = {
+  id: string;
   common: Common;
-} & {
   plugin: Plugin;
 };
 
-function attach(id: string, { common, plugin }: Unit) {
+function attach({ id, common, plugin }: Unit) {
   return new WebComponentWrapper({
     id: id,
     core: new UniversalAdCore({
@@ -28,17 +28,9 @@ function attach(id: string, { common, plugin }: Unit) {
   });
 }
 
-export function makeUnit({
-  id,
-  plugin,
-  common,
-}: {
-  id: string;
-  plugin: Plugin;
-  common: Common;
-}) {
+export function makeUnit(unit: Unit) {
   try {
-    const elm = attach(id, { plugin, common });
+    const elm = attach(unit);
     if (!elm) {
       throw new Error("create error");
     }
