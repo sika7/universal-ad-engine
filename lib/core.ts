@@ -1,6 +1,35 @@
 import { apiRequest, ApiSetting, Parameter } from "./api";
 import { Common } from "./common";
 import { executeMethod, generate, Template } from "./template/main";
+import { Plugin } from "./template/plugin";
+import { WebComponentWrapper } from "./wrapper/web-components";
+
+type Unit = {
+  id: string;
+  common: Common;
+  plugin: Plugin;
+};
+
+function attach({ id, common, plugin }: Unit) {
+  return new WebComponentWrapper({
+    id: id,
+    core: new UniversalAdCore({
+      common: common,
+      template: plugin.template(),
+      apiSetting: plugin.api,
+    }),
+  });
+}
+
+export function makeUnit(unit: Unit) {
+  try {
+    const elm = attach(unit);
+    elm.render();
+    return elm;
+  } catch (error) {
+    throw new Error("An error has occurred.");
+  }
+}
 
 export class UniversalAdCore {
   template: Template;

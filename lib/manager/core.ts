@@ -7,36 +7,9 @@ import {
   ObjectValidator,
 } from "@sika7/validator";
 import { Common, common } from "../common";
-import { UniversalAdCore } from "../core";
+import { makeUnit } from "../core";
 import { Plugin } from "../template/plugin";
 import { WebComponentWrapper } from "../wrapper/web-components";
-
-type Unit = {
-  id: string;
-  common: Common;
-  plugin: Plugin;
-};
-
-function attach({ id, common, plugin }: Unit) {
-  return new WebComponentWrapper({
-    id: id,
-    core: new UniversalAdCore({
-      common: common,
-      template: plugin.template(),
-      apiSetting: plugin.api,
-    }),
-  });
-}
-
-export function makeUnit(unit: Unit) {
-  try {
-    const elm = attach(unit);
-    elm.render();
-    return elm;
-  } catch (error) {
-    throw new Error("An error has occurred.");
-  }
-}
 
 class PluginController {
   private plugin: Plugin;
