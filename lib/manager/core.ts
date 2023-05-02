@@ -11,38 +11,38 @@ import { UniversalAdCore } from "../core";
 import { Plugin } from "../template/plugin";
 import { WebComponentWrapper } from "../wrapper/web-components";
 
-export interface Setting {
-  id: string;
-  parameter?: Record<string, any>;
-}
+type Unit = {
+  common: Common;
+} & {
+  plugin: Plugin;
+};
 
-function attach(setting: Setting, template: Plugin, common: Common) {
+function attach(id: string, { common, plugin }: Unit) {
   return new WebComponentWrapper({
-    id: setting.id,
+    id: id,
     core: new UniversalAdCore({
       common: common,
-      template: template.template(),
-      apiSetting: template.api,
+      template: plugin.template(),
+      apiSetting: plugin.api,
     }),
   });
 }
 
 export function makeUnit({
-  setting,
+  id,
   plugin,
   common,
 }: {
-  setting: Setting;
+  id: string;
   plugin: Plugin;
   common: Common;
 }) {
   try {
-    const elm = attach(setting, plugin, common);
-    if (!elm) return;
-    elm.render();
-    if (setting?.parameter) {
-      elm.pull(setting?.parameter);
+    const elm = attach(id, { plugin, common });
+    if (!elm) {
+      throw new Error("create error");
     }
+    elm.render();
     return elm;
   } catch (error) {
     throw new Error("An error has occurred.");
@@ -57,8 +57,8 @@ class PluginController {
     this.common = param.common;
   }
 
-  attach(setting: Setting) {
-    makeUnit({ setting, plugin: this.plugin, common: this.common });
+  attach(id: string) {
+    makeUnit({ id, plugin: this.plugin, common: this.common });
   }
 }
 
@@ -80,8 +80,8 @@ class Core {
 
     this.common = common({
       validator: (setting, value) => {
-        // const result = this.validator.validation(setting, value);
-        // if (result) return true;
+        const result = this.validator.validation(setting, value);
+        if (result) return true;
         return false;
       },
       log: ({ message }) => console.log(message),
