@@ -1,5 +1,6 @@
 import { common } from "../lib/common";
-import { makeUnit, UniversalAd } from "../lib/manager/core";
+import { makeUnit } from "../lib/core";
+import { UniversalAd } from "../lib/manager/core";
 import pluginUniversalAdTemplate from "../template/default";
 
 const unit = makeUnit({
