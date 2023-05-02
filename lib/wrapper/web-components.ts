@@ -9,6 +9,12 @@ export type WebComponentWrapperOption = {
 
 let coreInstance: UniversalAdCore | undefined;
 
+export function attachWebComponent(name: string) {
+  if (!customElements.get(name)) {
+    customElements.define(name, WebComponentWrapper);
+  }
+}
+
 export class WebComponentWrapper extends HTMLElement {
   id: string;
   shadow: ShadowRoot;
