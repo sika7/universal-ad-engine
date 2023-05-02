@@ -31,9 +31,6 @@ function attach({ id, common, plugin }: Unit) {
 export function makeUnit(unit: Unit) {
   try {
     const elm = attach(unit);
-    if (!elm) {
-      throw new Error("create error");
-    }
     elm.render();
     return elm;
   } catch (error) {
