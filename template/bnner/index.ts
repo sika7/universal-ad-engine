@@ -1,10 +1,10 @@
-import { RequestType } from "../lib/api";
-import { Template } from "../lib/template/main";
-import { Plugin } from "../lib/template/plugin";
-import { bannerValidation, BannerResponse } from "../response/banner";
-import * as style from "./default.css?inline";
+import { RequestType } from "../../lib/api";
+import { Template } from "../../lib/template/main";
+import { Plugin } from "../../lib/template/plugin";
+import { bannerValidation, BannerResponse } from "../../response/banner";
+import * as style from "./index.css?inline";
 
-class UniversalAdTemplate implements Template {
+class BnnerTemplate implements Template {
   constructor() {}
 
   url = "https://github.com/sika7/universal-ad-engine";
@@ -45,12 +45,12 @@ class UniversalAdTemplate implements Template {
   }
 }
 
-export default function pluginUniversalAdTemplate(
+export default function pluginBnner(
   url: string,
   type: RequestType
 ): Plugin {
   return {
-    template: () => new UniversalAdTemplate(),
+    template: () => new BnnerTemplate(),
     api: {
       url: url,
       type: type,
