@@ -1,4 +1,4 @@
-import { getProperty } from 'utility';
+import { getProperty } from 'common';
 
 export function getMethodList(object: object) {
   return Object.getOwnPropertyNames(Object.getPrototypeOf(object));
