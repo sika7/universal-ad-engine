@@ -1,8 +1,8 @@
 import { apiRequest, ApiSetting, Parameter } from "./api";
-import { Common } from "./common";
+import { common, Common } from "./common";
 import { executeMethod, generate, Template } from "./template/main";
 import { Plugin } from "./template/plugin";
-import { WebComponentWrapper } from "./wrapper/web-components";
+import { attachWebComponent, WebComponentWrapper } from "./wrapper/web-components";
 
 type Unit = {
   id: string;
@@ -71,6 +71,40 @@ export class UniversalAdCore {
 
   executeMethod(atter: string) {
     executeMethod(this.template, atter);
+  }
+}
+
+type FactorySetting = {
+  common: Common;
+  plugin: Plugin;
+};
+
+class Factory {
+  private setting: FactorySetting;
+  constructor(setting: FactorySetting) {
+    this.setting = setting;
+    Object.freeze(this);
+  }
+
+  makeUnit(id: string) {
+    return makeUnit({ ...this.setting, id });
+  }
+}
+
+export class Core {
+  private common: Common;
+
+  constructor(commonSetting: Common) {
+    attachWebComponent("universal-ad-unit");
+    this.common = common(commonSetting);
+    Object.freeze(this);
+  }
+
+  makeFactory(plugin: Plugin) {
+    return new Factory({
+      common: this.common,
+      plugin,
+    });
   }
 }
 

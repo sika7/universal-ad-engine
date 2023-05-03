@@ -6,8 +6,8 @@ import {
   isString,
   isUrl,
 } from "@sika7/validator";
-import { Core } from "../lib/manager/core";
 import pluginUniversalAdTemplate from "../template/default";
+import { Core } from "../lib/core";
 
 const validator = new ObjectValidator();
 validator.use(isString());
@@ -33,4 +33,3 @@ const factory = core.makeFactory(
 const unit = factory.makeUnit("app");
 
 unit.pull({});
-
