@@ -7,8 +7,8 @@ export type BannerResponse = {
 };
 
 export const bannerValidation = {
-  url: "string|url|https",
-  img_src: "string|url|https",
-  width: "number|integer",
-  height: "number|integer",
+  url: 'string|url|https',
+  img_src: 'string|url|https',
+  width: 'number|integer',
+  height: 'number|integer',
 };

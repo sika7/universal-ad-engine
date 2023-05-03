@@ -8,14 +8,11 @@ export interface Template {
 }
 
 type callFunc = {
-  call: (template: Template) => void
-}
+  call: (template: Template) => void;
+};
 
-export function executeMethod(
-  template: Template,
-  propertyPath: string
-): void {
-  const func = getProperty<callFunc, undefined>(template, propertyPath.replace(/\(\)/g, ""));
+export function executeMethod(template: Template, propertyPath: string): void {
+  const func = getProperty<callFunc, undefined>(template, propertyPath.replace(/\(\)/g, ''));
   if (!func) return;
   func.call(template);
 }
@@ -25,8 +22,8 @@ export function htmlText(template: Template) {
 }
 
 export function styleText(template: Template): string {
-  const func = getProperty<() => string, undefined>(template, "style");
-  if (!func) return "";
+  const func = getProperty<() => string, undefined>(template, 'style');
+  if (!func) return '';
   return func();
 }
 

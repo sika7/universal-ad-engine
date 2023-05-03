@@ -16,7 +16,7 @@
   "version": "0.0.0",
   "scripts": {
     "lint": "eslint --fix ./lib/*/*.ts",
-    "fmt": "prettier --write ./*/*.ts",
+    "fmt": "prettier --write ./lib/*/*.ts",
     "clean": "rm -rf ./dist",
     "build": "npm run clean && rollup --config rollup.config.js"
   },

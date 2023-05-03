@@ -1,6 +1,6 @@
-import { Parameter } from "api";
-import { UniversalAdCore } from "core";
-import { setEvent, applyDom } from "wrapper/front/dom";
+import { Parameter } from 'api';
+import { UniversalAdCore } from 'core';
+import { setEvent, applyDom } from 'wrapper/front/dom';
 
 export type WebComponentWrapperOption = {
   id: string;
@@ -24,7 +24,7 @@ export class WebComponentWrapper extends HTMLElement {
     this.id = id;
     coreInstance = core;
 
-    this.shadow = this.attachShadow({ mode: "closed" });
+    this.shadow = this.attachShadow({ mode: 'closed' });
 
     this.render();
     applyDom(this.id, this);
@@ -33,7 +33,7 @@ export class WebComponentWrapper extends HTMLElement {
   }
 
   connectedCallback() {
-    this.setAttribute("id", `ua-${this.id}`);
+    this.setAttribute('id', `ua-${this.id}`);
   }
 
   // renderedCallback() {}
@@ -44,11 +44,11 @@ export class WebComponentWrapper extends HTMLElement {
   }
 
   hide(second = 30) {
-    this.style.display = "none";
+    this.style.display = 'none';
     const limit = 180;
-    if (second > limit) throw new Error("The duration to hide is too long.");
+    if (second > limit) throw new Error('The duration to hide is too long.');
     setTimeout(() => {
-      this.style.display = "block";
+      this.style.display = 'block';
     }, 1000 * second);
   }
 
@@ -59,7 +59,7 @@ export class WebComponentWrapper extends HTMLElement {
   }
 
   setClickEvent() {
-    setEvent(this.shadow, "c", "click", (atter: string) => {
+    setEvent(this.shadow, 'c', 'click', (atter: string) => {
       if (!coreInstance) return;
       coreInstance.executeMethod(atter);
       this.render();
