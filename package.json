@@ -15,7 +15,7 @@
   "private": true,
   "version": "0.0.0",
   "scripts": {
-    "lint": "eslint --fix ./*/*.ts",
+    "lint": "eslint --fix ./lib/*/*.ts",
     "fmt": "prettier --write ./*/*.ts",
     "clean": "rm -rf ./dist",
     "build": "npm run clean && rollup --config rollup.config.js"
@@ -39,7 +39,8 @@
     "root": true,
     "ignorePatterns": [
       "rollup.config.js",
-      "dist/*"
+      "dist/*",
+      "example/*"
     ],
     "env": {
       "es2021": true,

@@ -1,9 +1,7 @@
-import { Plugin } from "template/plugin";
+import { Plugin } from 'template/plugin';
 
 class TemplateManager {
   private data: Record<string, Plugin> = {};
-
-  constructor() {}
 
   freezed() {
     Object.freeze(this.data);
@@ -14,7 +12,7 @@ class TemplateManager {
     try {
       this.data[name] = data;
     } catch (error) {
-      throw new Error("Adding templates is currently freezed.");
+      throw new Error('Adding templates is currently freezed.');
     }
   }
 

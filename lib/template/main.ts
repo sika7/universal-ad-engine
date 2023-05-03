@@ -3,17 +3,21 @@ import { getProperty } from "utility";
 
 export interface Template {
   style?(): string;
-  update(response: any): void;
+  update(response: unknown): void;
   render(): string;
+}
+
+type callFunc = {
+  call: (template: Template) => void
 }
 
 export function executeMethod(
   template: Template,
   propertyPath: string
-): any {
-  const func = getProperty(template, propertyPath.replace(/\(\)/g, ""));
-  if (!func) return "";
-  return func.call(template);
+): void {
+  const func = getProperty<callFunc, undefined>(template, propertyPath.replace(/\(\)/g, ""));
+  if (!func) return;
+  func.call(template);
 }
 
 export function htmlText(template: Template) {
@@ -21,7 +25,7 @@ export function htmlText(template: Template) {
 }
 
 export function styleText(template: Template): string {
-  const func = getProperty(template, "style");
+  const func = getProperty<() => string, undefined>(template, "style");
   if (!func) return "";
   return func();
 }

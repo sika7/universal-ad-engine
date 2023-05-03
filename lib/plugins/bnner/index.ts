@@ -4,8 +4,6 @@ import { RequestType } from "api";
 import { Plugin } from "template/plugin";
 
 class BnnerTemplate implements Template {
-  constructor() {}
-
   url = "https://github.com/sika7/universal-ad-engine";
   imgSrc =
     "https://placehold.jp/3d4070/ffffff/300x300.png?text=%E5%BA%83%E5%91%8A";

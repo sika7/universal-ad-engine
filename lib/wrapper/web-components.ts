@@ -35,14 +35,15 @@ export class WebComponentWrapper extends HTMLElement {
   connectedCallback() {
     this.setAttribute("id", `ua-${this.id}`);
   }
-  renderedCallback() {}
 
-  pull(parameter: Parameter) {
+  // renderedCallback() {}
+
+  async pull(parameter: Parameter) {
     if (!coreInstance) return;
-    coreInstance.pull(parameter);
+    await coreInstance.pull(parameter);
   }
 
-  hide(second: number = 30) {
+  hide(second = 30) {
     this.style.display = "none";
     const limit = 180;
     if (second > limit) throw new Error("The duration to hide is too long.");
