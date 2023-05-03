@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
+    "target": "es2022",
     "useDefineForClassFields": true,
     "module": "ESNext",
     "lib": ["ESNext", "DOM"],
@@ -16,5 +16,5 @@
     "skipLibCheck": true,
     "baseUrl": "./lib/"
   },
-  "include": ["lib", "example", "template", "response"]
+  "include": ["lib", "example"]
 }

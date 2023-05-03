@@ -47,12 +47,12 @@ export class UniversalAdCore {
   async pull(parameter: Parameter = {}) {
     const { url, type, validation } = this.apiSetting;
     return apiRequest(type, url, parameter)
-      .then((value: any) => {
+      .then((value) => {
         const { validator } = this.common;
-        if (validator(validation, value)) throw new Error(`validation error.`);
+        if (validator(validation, value as Record<string, unknown>)) throw new Error(`validation error.`);
         return value;
       })
-      .then((value: any) => {
+      .then((value: unknown) => {
         this.template.update(value);
       })
       .catch(() => {
