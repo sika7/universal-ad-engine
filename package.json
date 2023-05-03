@@ -15,13 +15,16 @@
   "private": true,
   "version": "0.0.0",
   "scripts": {
+    "fmt": "prettier --write ./*/*.ts",
     "clean": "rm -rf ./dist",
     "build": "npm run clean && rollup --config rollup.config.js"
   },
   "devDependencies": {
     "@rollup/plugin-typescript": "^11.1.0",
+    "prettier": "^2.8.8",
     "rollup": "^3.21.3",
     "rollup-plugin-dts-bundle-generator": "^1.4.0",
+    "tslib": "^2.5.0",
     "typescript": "^5.0.4"
   },
   "dependencies": {

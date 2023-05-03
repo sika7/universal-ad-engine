@@ -1,6 +1,6 @@
-import pluginBnner from "plugins/bnner";
-import { Core } from "core";
-import { validator } from "validator";
+import pluginBnner from 'plugins/bnner';
+import { Core } from 'core';
+import { validator } from 'validator';
 
 const core = new Core({
   validator: (setting, value) => {
@@ -12,8 +12,8 @@ const core = new Core({
   debug: ({ message }) => console.log(message),
 });
 
-const factory = core.makeFactory(pluginBnner("https://localhost:8000", "get"));
+const factory = core.makeFactory(pluginBnner('https://localhost:8000', 'get'));
 
-const unit = factory.makeUnit("app");
+const unit = factory.makeUnit('app');
 
 unit.pull({});

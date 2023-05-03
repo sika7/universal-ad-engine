@@ -1,11 +1,8 @@
-import { ApiSetting, Parameter, apiRequest } from "api";
-import { Common, common } from "common";
-import { Template, executeMethod, generate } from "template/main";
-import { Plugin } from "template/plugin";
-import {
-  WebComponentWrapper,
-  attachWebComponent,
-} from "wrapper/web-components";
+import { ApiSetting, Parameter, apiRequest } from 'api';
+import { Common, common } from 'common';
+import { Template, executeMethod, generate } from 'template/main';
+import { Plugin } from 'template/plugin';
+import { WebComponentWrapper, attachWebComponent } from 'wrapper/web-components';
 
 type Unit = {
   id: string;
@@ -30,7 +27,7 @@ function makeUnit(unit: Unit) {
     elm.render();
     return elm;
   } catch (error) {
-    throw new Error("An error has occurred.");
+    throw new Error('An error has occurred.');
   }
 }
 
@@ -39,11 +36,7 @@ export class UniversalAdCore {
   common: Common;
   apiSetting: ApiSetting;
 
-  constructor(data: {
-    common: Common;
-    template: Template;
-    apiSetting: ApiSetting;
-  }) {
+  constructor(data: { common: Common; template: Template; apiSetting: ApiSetting }) {
     const { common, template, apiSetting } = data;
     this.template = template;
     this.common = common;
@@ -64,7 +57,7 @@ export class UniversalAdCore {
       })
       .catch(() => {
         const { log } = this.common;
-        log({ message: "API request failed.", type: "critical" });
+        log({ message: 'API request failed.', type: 'critical' });
       });
   }
 
@@ -98,7 +91,7 @@ export class Core {
   private common: Common;
 
   constructor(commonSetting: Common) {
-    attachWebComponent("universal-ad-unit");
+    attachWebComponent('universal-ad-unit');
     this.common = common(commonSetting);
     Object.freeze(this);
   }
