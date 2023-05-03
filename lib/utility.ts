@@ -1,18 +1,42 @@
-/* eslint-disable  @typescript-eslint/no-explicit-any */
-export function getProperty<T>(object: T | undefined, propertyPath: string, defaultValue?: unknown): any {
-  if (!object) return defaultValue;
+function getData<T>(object: unknown, propertyPath: string): T {
+  const t = typeof object;
+  
+  if (t === 'undefined') {
+    throw new Error('error data is undefined.');
+  }
+  if (t === 'function') {
+    throw new Error('error data is function.');
+  }
+  if (t === 'string') {
+    throw new Error('error data is string.');
+  }
+  if (t === 'number') {
+    throw new Error('error data is number.');
+  }
+  if (t === 'bigint') {
+    throw new Error('error data is bigint.');
+  }
+  if (t === 'boolean') {
+    throw new Error('error data is boolean.');
+  }
+  if (t === 'symbol') {
+    throw new Error('error data is symbol.');
+  }
 
-  let result: Record<string, unknown> = object;
+  let result = object as Record<string, unknown>;
   const propertyArray = propertyPath.split('.');
+
   for (const property of propertyArray) {
-    if (property === '') return defaultValue;
-    if (typeof result[property] === 'undefined') return defaultValue;
     result = result[property] as Record<string, unknown>;
   }
-  if (typeof result === 'object') return result;
-  if (typeof result === 'function') return result;
-  if (typeof result === 'string') return result;
-  if (typeof result === 'number') return result;
-  if (typeof result === 'boolean') return result;
-  return result;
+
+  return result as T;
+}
+
+export function getProperty<T, D>(object: unknown, propertyPath: string, defaultValue?: D): T | D {
+  try {
+    return getData<T>(object, propertyPath);
+  } catch (error) {
+    return defaultValue as D;
+  }
 }
