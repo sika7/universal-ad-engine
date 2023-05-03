@@ -1,4 +1,4 @@
-import { Plugin } from "./plugin";
+import { Plugin } from "template/plugin";
 
 class TemplateManager {
   private data: Record<string, Plugin> = {};

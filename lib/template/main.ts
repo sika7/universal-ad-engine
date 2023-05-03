@@ -1,5 +1,5 @@
-import { render } from "./engine";
-import { getProperty } from "../utility";
+import { render } from "template/engine";
+import { getProperty } from "utility";
 
 export interface Template {
   style?(): string;

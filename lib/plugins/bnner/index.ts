@@ -1,8 +1,7 @@
-import { RequestType } from "../../lib/api";
-import { Template } from "../../lib/template/main";
-import { Plugin } from "../../lib/template/plugin";
-import { bannerValidation, BannerResponse } from "../../response/banner";
-import * as style from "./index.css?inline";
+import { Template } from "template/main";
+import { BannerResponse, bannerValidation } from "response/banner";
+import { RequestType } from "api";
+import { Plugin } from "template/plugin";
 
 class BnnerTemplate implements Template {
   constructor() {}
@@ -17,7 +16,21 @@ class BnnerTemplate implements Template {
   closeClass = "";
 
   style(): string {
-    return style.default;
+    return `
+div {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 300px;
+  height: 300px;
+  margin: auto;
+}
+.close {
+  display: none;
+}
+    `;
   }
 
   update(response: BannerResponse) {
@@ -45,10 +58,7 @@ class BnnerTemplate implements Template {
   }
 }
 
-export default function pluginBnner(
-  url: string,
-  type: RequestType
-): Plugin {
+export default function pluginBnner(url: string, type: RequestType): Plugin {
   return {
     template: () => new BnnerTemplate(),
     api: {

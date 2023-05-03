@@ -1,8 +1,11 @@
-import { apiRequest, ApiSetting, Parameter } from "./api";
-import { common, Common } from "./common";
-import { executeMethod, generate, Template } from "./template/main";
-import { Plugin } from "./template/plugin";
-import { attachWebComponent, WebComponentWrapper } from "./wrapper/web-components";
+import { ApiSetting, Parameter, apiRequest } from "api";
+import { Common, common } from "common";
+import { Template, executeMethod, generate } from "template/main";
+import { Plugin } from "template/plugin";
+import {
+  WebComponentWrapper,
+  attachWebComponent,
+} from "wrapper/web-components";
 
 type Unit = {
   id: string;

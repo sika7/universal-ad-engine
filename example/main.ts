@@ -1,6 +1,6 @@
-import { Core } from "../lib/core";
-import { validator } from "../lib/validator";
-import pluginBnner from "../template/bnner";
+import pluginBnner from "plugins/bnner";
+import { Core } from "core";
+import { validator } from "validator";
 
 const core = new Core({
   validator: (setting, value) => {

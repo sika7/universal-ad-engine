@@ -1,5 +1,5 @@
-import { RequestType } from "../api";
-import { Template } from "./main";
+import { RequestType } from "api";
+import { Template } from "template/main";
 
 export interface ApiSetting {
   url: string;

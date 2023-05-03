@@ -1,6 +1,6 @@
-import { Parameter } from "../api";
-import { applyDom, setEvent } from "./front/dom";
-import { UniversalAdCore } from "../core";
+import { Parameter } from "api";
+import { UniversalAdCore } from "core";
+import { setEvent, applyDom } from "wrapper/front/dom";
 
 export type WebComponentWrapperOption = {
   id: string;
