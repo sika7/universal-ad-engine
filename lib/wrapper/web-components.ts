@@ -1,13 +1,13 @@
 import { Parameter } from 'api';
-import { UniversalAdCore } from 'core';
+import { Core } from 'core';
 import { setEvent, applyDom } from 'wrapper/front/dom';
 
 export type WebComponentWrapperOption = {
   id: string;
-  core: UniversalAdCore;
+  core: Core;
 };
 
-let coreInstance: UniversalAdCore | undefined;
+let coreInstance: Core | undefined;
 
 export function attachWebComponent(name: string) {
   if (!customElements.get(name)) {
