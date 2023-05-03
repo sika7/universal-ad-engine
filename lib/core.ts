@@ -21,7 +21,7 @@ function attach({ id, common, plugin }: Unit) {
   });
 }
 
-export function makeUnit(unit: Unit) {
+function makeUnit(unit: Unit) {
   try {
     const elm = attach(unit);
     elm.render();
